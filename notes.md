@@ -172,3 +172,14 @@ bisaData[36] = {
 - Campo clave: `Code` (Excel) = `mdzone` (GeoJSON)
 - 118 wijken residenciales con datos ✅
 - 27 wijken sin datos (mdzone 700+) = null ✅
+
+## FASE 2 — Mapa básico COMPLETADO
+
+✅ Leaflet.js integrado
+✅ GeoJSON de 145 wijken cargado
+✅ Wijken dibujados en turquesa
+✅ Click en wijken funciona (resalta en rojo)
+✅ Zoom y pan funcionan
+✅ Mapa responsivo en 1920x1080
+
+Siguientes: Conectar datos BISA + panel de información
