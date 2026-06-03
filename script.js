@@ -57,25 +57,29 @@ function onEachFeature(feature, layer) {
         geojsonLayer.resetStyle(layer);
     });
 
-    layer.on('click', function () {
-        if (!data) {
-            console.log(`mdzone ${mdzone} — sin datos (zona no residencial)`);
-            return;
-        }
-        console.log('── Wijk:', props.namedut, '──────────────');
-        console.log('mdzone:          ', mdzone);
-        console.log('Noord-Afrika:    ', data.noord_afrika, '%');
-        console.log('Sub-Sahara:      ', data.sub_sahara, '%');
-        console.log('Turken:          ', data.turken, '%');
-        console.log('Fransen:         ', data.fransen, '%');
-        console.log('Europa 14:       ', data.europa14, '%');
-        console.log('EU nieuw:        ', data.eu_nieuw, '%');
-        console.log('Rest Europa:     ', data.rest_europa, '%');
-        console.log('OESO:            ', data.oeso, '%');
-        console.log('Andere landen:   ', data.andere_landen, '%');
-        console.log('Total extranjeros:', data.totaal_vreemdelingen);
-        console.log('────────────────────────────────────────');
-    });
+layer.on('click', function () {
+    const panel = document.getElementById('panel');
+
+    if (!data) {
+        panel.innerHTML = '<p>Geen data beschikbaar</p>';
+        return;
+    }
+
+    panel.innerHTML = `
+        <p style="font-weight:bold; font-size:16px; margin-bottom:10px">${props.namedut}</p>
+        <p>Noord-Afrika: ${data.noord_afrika}%</p>
+        <p>Sub-Sahara: ${data.sub_sahara}%</p>
+        <p>Turken: ${data.turken}%</p>
+        <p>Fransen: ${data.fransen}%</p>
+        <p>Europa 14: ${data.europa14}%</p>
+        <p>EU nieuw: ${data.eu_nieuw}%</p>
+        <p>Rest Europa: ${data.rest_europa}%</p>
+        <p>OESO: ${data.oeso}%</p>
+        <p>Andere landen: ${data.andere_landen}%</p>
+        <hr style="margin:8px 0">
+        <p>Totaal: ${data.totaal_vreemdelingen} personen</p>
+    `;
+});
 }
 
 
