@@ -35,3 +35,31 @@ html, body {
     font-size: 16px;
     margin-bottom: 8px;
 }
+
+#barra-botones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.95);
+}
+
+.btn-categoria {
+    padding: 8px 16px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-categoria.activo {
+    background: #2171b5;
+    color: white;
+    border-color: #2171b5;
+}

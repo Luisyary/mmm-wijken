@@ -29,7 +29,7 @@ function getColor(value) {
 function estiloWijk(feature) {
     const mdzone = feature.properties.mdzone;
     const data   = bisaData[mdzone];
-    const valor  = data ? data.noord_afrika : null;
+    const valor = data ? data[categoriaActiva] : null;
 
     return {
         fillColor:   getColor(valor),
@@ -65,19 +65,12 @@ layer.on('click', function () {
         return;
     }
 
+    const valor = data[categoriaActiva];
+    const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+
     panel.innerHTML = `
-        <p style="font-weight:bold; font-size:16px; margin-bottom:10px">${props.namedut}</p>
-        <p>Noord-Afrika: ${data.noord_afrika}%</p>
-        <p>Sub-Sahara: ${data.sub_sahara}%</p>
-        <p>Turken: ${data.turken}%</p>
-        <p>Fransen: ${data.fransen}%</p>
-        <p>Europa 14: ${data.europa14}%</p>
-        <p>EU nieuw: ${data.eu_nieuw}%</p>
-        <p>Rest Europa: ${data.rest_europa}%</p>
-        <p>OESO: ${data.oeso}%</p>
-        <p>Andere landen: ${data.andere_landen}%</p>
-        <hr style="margin:8px 0">
-        <p>Totaal: ${data.totaal_vreemdelingen} personen</p>
+        <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
+        <p>${nombreCategoria}: ${valor}%</p>
     `;
 });
 }
@@ -102,3 +95,20 @@ fetch('data/quartiers.geojson')
         console.error('❌ Error:', error.message);
     });
     
+    // ── 5. BOTONES DE CATEGORÍA ──────────────────────────────────────
+let categoriaActiva = 'noord_afrika';
+
+document.querySelectorAll('.btn-categoria').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        // Actualizar botón activo
+        document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('activo'));
+        this.classList.add('activo');
+
+        // Cambiar categoría activa
+        categoriaActiva = this.dataset.categoria;
+
+        // Repintar el mapa
+        geojsonLayer.setStyle(estiloWijk);
+    });
+});
