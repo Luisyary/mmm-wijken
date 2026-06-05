@@ -13,9 +13,6 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 
 
 // ── 2. COLOREAR SEGÚN DATOS BISA ─────────────────────────────────
-// Por ahora coloreamos según Noord-Afrika (para probar)
-// En Fase 4 el usuario podrá elegir la categoría
-
 function getColor(value) {
     if (value === null || value === undefined) return '#cccccc';
     if (value > 20) return '#08306b';
@@ -29,8 +26,7 @@ function getColor(value) {
 function estiloWijk(feature) {
     const mdzone = feature.properties.mdzone;
     const data   = bisaData[mdzone];
-    const valor = data ? data[categoriaActiva] : null;
-
+    const valor  = data ? data[categoriaActiva] : null;
     return {
         fillColor:   getColor(valor),
         fillOpacity: 0.75,
@@ -39,44 +35,96 @@ function estiloWijk(feature) {
     };
 }
 
+function estiloGemeente(feature) {
+    return {
+        fillColor:   'transparent',
+        fillOpacity: 0,
+        color:       '#f5a623',
+        weight:      3,
+    };
+}
 
-// ── 3. EVENTOS POR WIJK ──────────────────────────────────────────
+function estiloWijkSeleccionado() {
+    return {
+        fillOpacity: 0.9,
+        color:       '#ffffff',
+        weight:      3,
+    };
+}
+
+
+// ── 3. ESTADO ────────────────────────────────────────────────────
 let geojsonLayer;
+let categoriaActiva  = 'noord_afrika';
+let wijkSeleccionado = null;
+let gemeenteActiva   = null;
 
+
+// ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
 function onEachFeature(feature, layer) {
     const props  = feature.properties;
     const mdzone = props.mdzone;
     const data   = bisaData[mdzone];
 
     layer.on('mouseover', function () {
-        layer.setStyle({ fillOpacity: 1, weight: 2 });
+        if (layer !== wijkSeleccionado) {
+            layer.setStyle({ fillOpacity: 1, weight: 2 });
+        }
         layer.bringToFront();
     });
 
     layer.on('mouseout', function () {
-        geojsonLayer.resetStyle(layer);
+        if (layer !== wijkSeleccionado) {
+            geojsonLayer.resetStyle(layer);
+        }
     });
 
-layer.on('click', function () {
-    const panel = document.getElementById('panel');
+    layer.on('click', function () {
 
-    if (!data) {
-        panel.innerHTML = '<p>Geen data beschikbaar</p>';
-        return;
-    }
+        // Resetear selección anterior
+        if (wijkSeleccionado) {
+            geojsonLayer.resetStyle(wijkSeleccionado);
+        }
 
-    const valor = data[categoriaActiva];
-    const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+        // Resetear gemeente anterior
+        if (gemeenteActiva) {
+            geojsonLayer.eachLayer(l => geojsonLayer.resetStyle(l));
+        }
 
-    panel.innerHTML = `
-        <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
-        <p>${nombreCategoria}: ${valor}%</p>
-    `;
-});
+        // Marcar wijk seleccionado
+        wijkSeleccionado = layer;
+        layer.setStyle(estiloWijkSeleccionado());
+        layer.bringToFront();
+
+        // Resaltar gemeente completo
+        gemeenteActiva = props.gemeentenaam;
+        geojsonLayer.eachLayer(l => {
+            if (l.feature.properties.gemeentenaam === gemeenteActiva && l !== layer) {
+                l.setStyle(estiloGemeente());
+            }
+        });
+
+        // Actualizar panel
+        const panel = document.getElementById('panel');
+
+        if (!data) {
+            panel.innerHTML = '<p>Geen data beschikbaar</p>';
+            return;
+        }
+
+        const valor          = data[categoriaActiva];
+        const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+
+        panel.innerHTML = `
+            <p style="font-size:12px; color:#888; margin-bottom:2px">${props.gemeentenaam}</p>
+            <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
+            <p>${nombreCategoria}: ${valor}%</p>
+        `;
+    });
 }
 
 
-// ── 4. CARGAR GEOJSON ────────────────────────────────────────────
+// ── 5. CARGAR GEOJSON ────────────────────────────────────────────
 fetch('data/quartiers.geojson')
     .then(response => {
         if (!response.ok) throw new Error(`Error ${response.status}`);
@@ -94,21 +142,27 @@ fetch('data/quartiers.geojson')
     .catch(error => {
         console.error('❌ Error:', error.message);
     });
-    
-    // ── 5. BOTONES DE CATEGORÍA ──────────────────────────────────────
-let categoriaActiva = 'noord_afrika';
 
+
+// ── 6. BOTONES DE CATEGORÍA ──────────────────────────────────────
 document.querySelectorAll('.btn-categoria').forEach(btn => {
     btn.addEventListener('click', function () {
-
-        // Actualizar botón activo
         document.querySelectorAll('.btn-categoria').forEach(b => b.classList.remove('activo'));
         this.classList.add('activo');
-
-        // Cambiar categoría activa
         categoriaActiva = this.dataset.categoria;
-
-        // Repintar el mapa
         geojsonLayer.setStyle(estiloWijk);
+
+        // Restaurar resaltado de gemeente y wijk seleccionado
+        if (gemeenteActiva) {
+            geojsonLayer.eachLayer(l => {
+                if (l.feature.properties.gemeentenaam === gemeenteActiva && l !== wijkSeleccionado) {
+                    l.setStyle(estiloGemeente());
+                }
+            });
+        }
+        if (wijkSeleccionado) {
+            wijkSeleccionado.setStyle(estiloWijkSeleccionado());
+            wijkSeleccionado.bringToFront();
+        }
     });
 });
