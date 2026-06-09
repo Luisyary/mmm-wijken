@@ -58,6 +58,8 @@ let geojsonLayer;
 let categoriaActiva  = 'noord_afrika';
 let wijkSeleccionado = null;
 let gemeenteActiva   = null;
+let communesData = null;
+let gemeenteLayer = null;
 
 
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
@@ -87,22 +89,37 @@ function onEachFeature(feature, layer) {
         }
 
         // Resetear gemeente anterior
-        if (gemeenteActiva) {
-            geojsonLayer.eachLayer(l => geojsonLayer.resetStyle(l));
-        }
+if (gemeenteLayer) {
+    map.removeLayer(gemeenteLayer);
+    gemeenteLayer = null;
+}
 
         // Marcar wijk seleccionado
         wijkSeleccionado = layer;
         layer.setStyle(estiloWijkSeleccionado());
         layer.bringToFront();
 
-        // Resaltar gemeente completo
-        gemeenteActiva = props.gemeentenaam;
-        geojsonLayer.eachLayer(l => {
-            if (l.feature.properties.gemeentenaam === gemeenteActiva && l !== layer) {
-                l.setStyle(estiloGemeente());
-            }
-        });
+// Buscar commune correcta con Turf.js
+var center = layer.getBounds().getCenter();
+var punto = turf.point([center.lng, center.lat]);
+var communeEncontrada = null;
+
+communesData.features.forEach(function(commune) {
+    if (turf.booleanPointInPolygon(punto, commune)) {
+        communeEncontrada = commune;
+    }
+});
+
+// Dibujar contorno commune
+if (gemeenteLayer) {
+    map.removeLayer(gemeenteLayer);
+}
+if (communeEncontrada) {
+    gemeenteLayer = L.geoJSON(communeEncontrada, {
+        style: estiloGemeente
+    }).addTo(map);
+    gemeenteActiva = communeEncontrada.properties.name_nl;
+}
 
         // Actualizar panel
         const panel = document.getElementById('panel');
@@ -116,13 +133,23 @@ function onEachFeature(feature, layer) {
         const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
 
         panel.innerHTML = `
-            <p style="font-size:12px; color:#888; margin-bottom:2px">${props.gemeentenaam}</p>
+            <p style="font-size:12px; color:#888; margin-bottom:2px">${gemeenteActiva}</p>
             <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
             <p>${nombreCategoria}: ${valor}%</p>
         `;
     });
 }
 
+// — CARGAR COMMUNES ————————————————————————————
+fetch('data/communes.geojson')
+    .then(response => response.json())
+    .then(data => {
+        communesData = data;
+        console.log('✅ Communes cargadas');
+    })
+    .catch(error => {
+        console.error('❌ Error communes:', error.message);
+    });
 
 // ── 5. CARGAR GEOJSON ────────────────────────────────────────────
 fetch('data/quartiers.geojson')
