@@ -73,6 +73,9 @@ function onEachFeature(feature, layer) {
             layer.setStyle({ fillOpacity: 1, weight: 2 });
         }
         layer.bringToFront();
+         if (gemeenteLayer) {
+        gemeenteLayer.bringToFront();
+    }
     });
 
     layer.on('mouseout', function () {
@@ -116,7 +119,8 @@ if (gemeenteLayer) {
 }
 if (communeEncontrada) {
     gemeenteLayer = L.geoJSON(communeEncontrada, {
-        style: estiloGemeente
+        style: estiloGemeente,
+        interactive: false
     }).addTo(map);
     gemeenteActiva = communeEncontrada.properties.name_nl;
 }
@@ -179,14 +183,19 @@ document.querySelectorAll('.btn-categoria').forEach(btn => {
         categoriaActiva = this.dataset.categoria;
         geojsonLayer.setStyle(estiloWijk);
 
+        // Limpiar selección al cambiar categoría
+if (gemeenteLayer) {
+    map.removeLayer(gemeenteLayer);
+    gemeenteLayer = null;
+}
+if (wijkSeleccionado) {
+    geojsonLayer.resetStyle(wijkSeleccionado);
+    wijkSeleccionado = null;
+}
+gemeenteActiva = null;
+document.getElementById('panel').innerHTML = '<p id="panel-naam">Klik op een wijk</p>';
+
         // Restaurar resaltado de gemeente y wijk seleccionado
-        if (gemeenteActiva) {
-            geojsonLayer.eachLayer(l => {
-                if (l.feature.properties.gemeentenaam === gemeenteActiva && l !== wijkSeleccionado) {
-                    l.setStyle(estiloGemeente());
-                }
-            });
-        }
         if (wijkSeleccionado) {
             wijkSeleccionado.setStyle(estiloWijkSeleccionado());
             wijkSeleccionado.bringToFront();
