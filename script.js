@@ -104,11 +104,33 @@ const i18n = {
         opDe:        '1 op de',      // → "1 op de 16"
         opDe1000:    'op de 1000',   // → "3 op de 1000"
         menosMil:    'minder dan 1 op de 1000',
+        categorias: {
+            noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse' },
+            sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse' },
+            turken:          { boton: 'Turken',         adjetivo: 'Turkse' },
+            fransen:         { boton: 'Fransen',        adjetivo: 'Franse' },
+            europa14:        { boton: 'Europa 14',      adjetivo: 'Europese (14)' },
+            oeso:            { boton: 'OESO',           adjetivo: 'OESO-' },
+            eu_nieuw:        { boton: 'Nieuwe EU',      adjetivo: 'nieuwe EU-' },
+            latijns_amerika: { boton: 'Latijns-Amerika', adjetivo: 'Latijns-Amerikaanse' },
+            andere_landen:   { boton: 'Andere landen',  adjetivo: 'andere' },
+        },
     },
     fr: {
         opDe:        '1 sur',
         opDe1000:    'sur 1000',
         menosMil:    'moins de 1 sur 1000',
+        categorias: {
+            noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord" },
+            sub_sahara:      { boton: 'Afrique subsah', adjetivo: "Part de l'Afrique subsaharienne" },
+            turken:          { boton: 'Turquie', adjetivo: 'Part de la Turquie' },
+            fransen:         { boton: 'Français', adjetivo: 'Part des Français' },
+            europa14:        { boton: 'Europe 14', adjetivo: "Part de l'Europe des 14 (hors Belgique)" },
+            oeso:            { boton: 'OCDE', adjetivo: 'Part des pays OCDE' },
+            eu_nieuw:        { boton: 'Nouvelle EU', adjetivo: "Part des nouveaux états membres de l'U.E." },
+            latijns_amerika: { boton: 'Amérique latine', adjetivo: "Part de l'Amérique latine" },
+            andere_landen:   { boton: 'Autres pays', adjetivo: 'Part des autres pays' },
+        },
     },
 }
 
