@@ -1,22 +1,22 @@
-// BISA Wijkmonitoring 2025 — Datos de origen por wijk (mdzone)
-// Fuente: wijkmonitoring.brussels — Descarga: 2026-05-24
-// 9 categorías de origen (% del total de habitantes)
-// totaal_vreemdelingen = número absoluto de extranjeros
+// BISA Wijkmonitoring 2025 â€” Datos de origen por wijk (mdzone)
+// Fuente: wijkmonitoring.brussels â€” Descarga: 2026-05-24
+// 9 categorÃ­as de origen (% del total de habitantes)
+// totaal_vreemdelingen = nÃºmero absoluto de extranjeros
 //
-// Categorías:
-//   andere_landen    → Otros países
-//   fransen          → Francia
-//   oeso             → OCDE (excl. Europa, Turquía, Latam)
-//   eu_nieuw         → Nuevos estados UE (2004/2007/2013)
-//   rest_europa      → Resto de Europa (sin UE27)
-//   turken           → Turquía
-//   europa14         → Europa-14 (sin Bélgica)
-//   latijns_amerika  → América Latina
-//   noord_afrika     → África del Norte
-//   sub_sahara       → África Subsahariana
-//   totaal_vreemdelingen → Total extranjeros (personas)
+// CategorÃ­as:
+//   andere_landen    â†’ Otros paÃ­ses
+//   fransen          â†’ Francia
+//   oeso             â†’ OCDE (excl. Europa, TurquÃ­a, Latam)
+//   eu_nieuw         â†’ Nuevos estados UE (2004/2007/2013)
+//   rest_europa      â†’ Resto de Europa (sin UE27)
+//   turken           â†’ TurquÃ­a
+//   europa14         â†’ Europa-14 (sin BÃ©lgica)
+//   latijns_amerika  â†’ AmÃ©rica Latina
+//   noord_afrika     â†’ Ãfrica del Norte
+//   sub_sahara       â†’ Ãfrica Subsahariana
+//   totaal_vreemdelingen â†’ Total extranjeros (personas)
 //
-// null = ND (sin datos — zonas no residenciales: parques, industria, cementerios)
+// null = ND (sin datos â€” zonas no residenciales: parques, industria, cementerios)
 
 var bisaData = {
   1: {  // Grote Markt
@@ -31,6 +31,7 @@ var bisaData = {
     noord_afrika: 2.73,
     sub_sahara: 2.91,
     totaal_vreemdelingen: 2311.0,
+    totale_bevolking: 3993,
   },
   2: {  // Dansaert
     andere_landen: 4.64,
@@ -44,6 +45,7 @@ var bisaData = {
     noord_afrika: 4.16,
     sub_sahara: 3.12,
     totaal_vreemdelingen: 4005.0,
+    totale_bevolking: 9065,
   },
   3: {  // Begijnhof - Diksmuide
     andere_landen: 6.6,
@@ -57,6 +59,7 @@ var bisaData = {
     noord_afrika: 3.85,
     sub_sahara: 4.61,
     totaal_vreemdelingen: 3171.0,
+    totale_bevolking: 7240,
   },
   4: {  // Martelaars
     andere_landen: 11.34,
@@ -70,6 +73,7 @@ var bisaData = {
     noord_afrika: 3.7,
     sub_sahara: 4.21,
     totaal_vreemdelingen: 1978.0,
+    totale_bevolking: 3351,
   },
   5: {  // Onze-Lieve-Vrouw-ter-Sneeuw
     andere_landen: 6.32,
@@ -83,6 +87,7 @@ var bisaData = {
     noord_afrika: 2.4,
     sub_sahara: 3.56,
     totaal_vreemdelingen: 1685.0,
+    totale_bevolking: 3037,
   },
   6: {  // Koningswijk
     andere_landen: 7.79,
@@ -96,6 +101,7 @@ var bisaData = {
     noord_afrika: 0.78,
     sub_sahara: 1.04,
     totaal_vreemdelingen: 224.0,
+    totale_bevolking: 385,
   },
   7: {  // Zavel
     andere_landen: 2.61,
@@ -109,6 +115,7 @@ var bisaData = {
     noord_afrika: 1.75,
     sub_sahara: 2.28,
     totaal_vreemdelingen: 1640.0,
+    totale_bevolking: 3028,
   },
   8: {  // Marollen
     andere_landen: 2.59,
@@ -122,6 +129,7 @@ var bisaData = {
     noord_afrika: 6.9,
     sub_sahara: 4.63,
     totaal_vreemdelingen: 4130.0,
+    totale_bevolking: 12436,
   },
   9: {  // Stalingrad
     andere_landen: 5.92,
@@ -135,6 +143,7 @@ var bisaData = {
     noord_afrika: 6.04,
     sub_sahara: 4.93,
     totaal_vreemdelingen: 2035.0,
+    totale_bevolking: 4139,
   },
   10: {  // Anneessens
     andere_landen: 4.26,
@@ -148,6 +157,7 @@ var bisaData = {
     noord_afrika: 8.51,
     sub_sahara: 5.01,
     totaal_vreemdelingen: 4077.0,
+    totale_bevolking: 10280,
   },
   11: {  // Kuregem Bara
     andere_landen: 12.48,
@@ -161,6 +171,7 @@ var bisaData = {
     noord_afrika: 5.25,
     sub_sahara: 4.29,
     totaal_vreemdelingen: 6322.0,
+    totale_bevolking: 12416,
   },
   12: {  // Kuregem Veeartsenij
     andere_landen: 6.48,
@@ -174,6 +185,7 @@ var bisaData = {
     noord_afrika: 6.5,
     sub_sahara: 4.26,
     totaal_vreemdelingen: 4392.0,
+    totale_bevolking: 10837,
   },
   13: {  // Kuregem Dauw
     andere_landen: 13.37,
@@ -187,6 +199,7 @@ var bisaData = {
     noord_afrika: 6.26,
     sub_sahara: 5.97,
     totaal_vreemdelingen: 2917.0,
+    totale_bevolking: 6819,
   },
   14: {  // Hertogin
     andere_landen: 7.72,
@@ -200,6 +213,7 @@ var bisaData = {
     noord_afrika: 8.19,
     sub_sahara: 3.56,
     totaal_vreemdelingen: 1960.0,
+    totale_bevolking: 5424,
   },
   15: {  // Weststation
     andere_landen: 6.73,
@@ -213,6 +227,7 @@ var bisaData = {
     noord_afrika: 9.51,
     sub_sahara: 2.46,
     totaal_vreemdelingen: 3483.0,
+    totale_bevolking: 10112,
   },
   16: {  // Historisch Molenbeek
     andere_landen: 6.0,
@@ -226,6 +241,7 @@ var bisaData = {
     noord_afrika: 8.19,
     sub_sahara: 2.52,
     totaal_vreemdelingen: 5551.0,
+    totale_bevolking: 17361,
   },
   17: {  // Koekelberg
     andere_landen: 3.91,
@@ -239,6 +255,7 @@ var bisaData = {
     noord_afrika: 6.6,
     sub_sahara: 2.46,
     totaal_vreemdelingen: 2969.0,
+    totale_bevolking: 8713,
   },
   18: {  // Havenwijk
     andere_landen: 4.59,
@@ -252,6 +269,7 @@ var bisaData = {
     noord_afrika: 6.23,
     sub_sahara: 2.97,
     totaal_vreemdelingen: 6514.0,
+    totale_bevolking: 18530,
   },
   19: {  // Oud Laken West
     andere_landen: 3.89,
@@ -265,6 +283,7 @@ var bisaData = {
     noord_afrika: 4.97,
     sub_sahara: 2.61,
     totaal_vreemdelingen: 3474.0,
+    totale_bevolking: 9450,
   },
   20: {  // Oud Laken Oost
     andere_landen: 3.21,
@@ -278,6 +297,7 @@ var bisaData = {
     noord_afrika: 6.25,
     sub_sahara: 2.75,
     totaal_vreemdelingen: 6981.0,
+    totale_bevolking: 19874,
   },
   21: {  // Noordwijk
     andere_landen: 5.93,
@@ -291,6 +311,7 @@ var bisaData = {
     noord_afrika: 5.99,
     sub_sahara: 4.08,
     totaal_vreemdelingen: 6453.0,
+    totale_bevolking: 16566,
   },
   22: {  // Brabantwijk
     andere_landen: 5.5,
@@ -304,6 +325,7 @@ var bisaData = {
     noord_afrika: 5.23,
     sub_sahara: 4.82,
     totaal_vreemdelingen: 8108.0,
+    totale_bevolking: 18628,
   },
   23: {  // Colignon
     andere_landen: 4.63,
@@ -317,6 +339,7 @@ var bisaData = {
     noord_afrika: 4.53,
     sub_sahara: 2.5,
     totaal_vreemdelingen: 5990.0,
+    totale_bevolking: 17046,
   },
   24: {  // Haachtse Steenweg
     andere_landen: 5.47,
@@ -330,6 +353,7 @@ var bisaData = {
     noord_afrika: 3.24,
     sub_sahara: 2.4,
     totaal_vreemdelingen: 7843.0,
+    totale_bevolking: 17566,
   },
   25: {  // Sint-Joost Centrum
     andere_landen: 6.29,
@@ -343,6 +367,7 @@ var bisaData = {
     noord_afrika: 3.4,
     sub_sahara: 2.76,
     totaal_vreemdelingen: 8826.0,
+    totale_bevolking: 19046,
   },
   26: {  // Dailly
     andere_landen: 4.0,
@@ -356,6 +381,7 @@ var bisaData = {
     noord_afrika: 2.59,
     sub_sahara: 1.44,
     totaal_vreemdelingen: 7115.0,
+    totale_bevolking: 17244,
   },
   27: {  // Josaphat
     andere_landen: 3.24,
@@ -369,6 +395,7 @@ var bisaData = {
     noord_afrika: 1.65,
     sub_sahara: 1.5,
     totaal_vreemdelingen: 2648.0,
+    totale_bevolking: 7313,
   },
   28: {  // Plasky
     andere_landen: 4.61,
@@ -382,6 +409,7 @@ var bisaData = {
     noord_afrika: 1.25,
     sub_sahara: 1.47,
     totaal_vreemdelingen: 4890.0,
+    totale_bevolking: 10509,
   },
   29: {  // Squares
     andere_landen: 6.39,
@@ -395,6 +423,7 @@ var bisaData = {
     noord_afrika: 1.68,
     sub_sahara: 1.75,
     totaal_vreemdelingen: 9681.0,
+    totale_bevolking: 15061,
   },
   30: {  // Tervurense Poort
     andere_landen: 4.12,
@@ -408,6 +437,7 @@ var bisaData = {
     noord_afrika: 1.59,
     sub_sahara: 1.53,
     totaal_vreemdelingen: 6253.0,
+    totale_bevolking: 10932,
   },
   31: {  // Sint-Michiel
     andere_landen: 3.58,
@@ -421,6 +451,7 @@ var bisaData = {
     noord_afrika: 0.9,
     sub_sahara: 0.96,
     totaal_vreemdelingen: 3701.0,
+    totale_bevolking: 7095,
   },
   32: {  // Sint-Pieter
     andere_landen: 5.09,
@@ -434,6 +465,7 @@ var bisaData = {
     noord_afrika: 1.56,
     sub_sahara: 1.57,
     totaal_vreemdelingen: 7445.0,
+    totale_bevolking: 14635,
   },
   33: {  // Jacht
     andere_landen: 5.09,
@@ -447,6 +479,7 @@ var bisaData = {
     noord_afrika: 2.13,
     sub_sahara: 1.81,
     totaal_vreemdelingen: 8217.0,
+    totale_bevolking: 18239,
   },
   34: {  // Jourdan
     andere_landen: 4.7,
@@ -460,6 +493,7 @@ var bisaData = {
     noord_afrika: 2.06,
     sub_sahara: 1.38,
     totaal_vreemdelingen: 4820.0,
+    totale_bevolking: 9317,
   },
   35: {  // Europawijk
     andere_landen: 5.48,
@@ -473,6 +507,7 @@ var bisaData = {
     noord_afrika: 1.11,
     sub_sahara: 1.78,
     totaal_vreemdelingen: 2904.0,
+    totale_bevolking: 3869,
   },
   36: {  // Matonge
     andere_landen: 5.15,
@@ -486,6 +521,7 @@ var bisaData = {
     noord_afrika: 1.85,
     sub_sahara: 3.33,
     totaal_vreemdelingen: 5874.0,
+    totale_bevolking: 9605,
   },
   37: {  // Flagey - Malibran
     andere_landen: 3.51,
@@ -499,6 +535,7 @@ var bisaData = {
     noord_afrika: 2.41,
     sub_sahara: 2.32,
     totaal_vreemdelingen: 6692.0,
+    totale_bevolking: 13620,
   },
   38: {  // Hospitaal Etterbeek-Elsene
     andere_landen: 3.28,
@@ -512,6 +549,7 @@ var bisaData = {
     noord_afrika: 1.91,
     sub_sahara: 2.34,
     totaal_vreemdelingen: 4545.0,
+    totale_bevolking: 9931,
   },
   39: {  // Vijvers van Elsene
     andere_landen: 3.95,
@@ -525,6 +563,7 @@ var bisaData = {
     noord_afrika: 1.05,
     sub_sahara: 1.2,
     totaal_vreemdelingen: 4717.0,
+    totale_bevolking: 9110,
   },
   40: {  // Louiza - Langehaag
     andere_landen: 2.96,
@@ -538,6 +577,7 @@ var bisaData = {
     noord_afrika: 1.31,
     sub_sahara: 1.41,
     totaal_vreemdelingen: 4356.0,
+    totale_bevolking: 7233,
   },
   41: {  // Berckmans - Munthof
     andere_landen: 2.93,
@@ -551,6 +591,7 @@ var bisaData = {
     noord_afrika: 1.9,
     sub_sahara: 2.16,
     totaal_vreemdelingen: 5181.0,
+    totale_bevolking: 8968,
   },
   42: {  // Kastelein
     andere_landen: 2.96,
@@ -564,6 +605,7 @@ var bisaData = {
     noord_afrika: 1.13,
     sub_sahara: 1.16,
     totaal_vreemdelingen: 6103.0,
+    totale_bevolking: 10170,
   },
   43: {  // Brugmann - Lepoutre
     andere_landen: 2.58,
@@ -577,6 +619,7 @@ var bisaData = {
     noord_afrika: 0.82,
     sub_sahara: 0.95,
     totaal_vreemdelingen: 9223.0,
+    totale_bevolking: 16893,
   },
   44: {  // Churchill
     andere_landen: 3.08,
@@ -590,8 +633,9 @@ var bisaData = {
     noord_afrika: 0.93,
     sub_sahara: 1.2,
     totaal_vreemdelingen: 5904.0,
+    totale_bevolking: 13708,
   },
-  45: {  // Molière - Longchamp
+  45: {  // MoliÃ¨re - Longchamp
     andere_landen: 2.3,
     fransen: 11.85,
     oeso: 0.47,
@@ -603,6 +647,7 @@ var bisaData = {
     noord_afrika: 1.49,
     sub_sahara: 1.65,
     totaal_vreemdelingen: 4181.0,
+    totale_bevolking: 10333,
   },
   46: {  // Hoogte 100
     andere_landen: 1.4,
@@ -616,6 +661,7 @@ var bisaData = {
     noord_afrika: 1.0,
     sub_sahara: 1.3,
     totaal_vreemdelingen: 2914.0,
+    totale_bevolking: 8518,
   },
   47: {  // Hoog Sint-Gillis
     andere_landen: 3.09,
@@ -629,6 +675,7 @@ var bisaData = {
     noord_afrika: 1.65,
     sub_sahara: 1.85,
     totaal_vreemdelingen: 7277.0,
+    totale_bevolking: 14610,
   },
   48: {  // Hallepoort
     andere_landen: 3.06,
@@ -642,6 +689,7 @@ var bisaData = {
     noord_afrika: 4.95,
     sub_sahara: 3.14,
     totaal_vreemdelingen: 5979.0,
+    totale_bevolking: 13554,
   },
   49: {  // Bosnie
     andere_landen: 1.96,
@@ -655,6 +703,7 @@ var bisaData = {
     noord_afrika: 6.81,
     sub_sahara: 3.3,
     totaal_vreemdelingen: 3089.0,
+    totale_bevolking: 6990,
   },
   50: {  // Laag Vorst
     andere_landen: 3.22,
@@ -668,6 +717,7 @@ var bisaData = {
     noord_afrika: 6.35,
     sub_sahara: 2.64,
     totaal_vreemdelingen: 5197.0,
+    totale_bevolking: 13162,
   },
   51: {  // Van Volxem - Van Haelen
     andere_landen: 2.06,
@@ -681,6 +731,7 @@ var bisaData = {
     noord_afrika: 2.95,
     sub_sahara: 2.25,
     totaal_vreemdelingen: 4909.0,
+    totale_bevolking: 13422,
   },
   52: {  // Veeweide - Aurore
     andere_landen: 3.54,
@@ -694,6 +745,7 @@ var bisaData = {
     noord_afrika: 4.1,
     sub_sahara: 2.32,
     totaal_vreemdelingen: 5973.0,
+    totale_bevolking: 16233,
   },
   53: {  // Bizet - Rad - Coovi
     andere_landen: 3.06,
@@ -707,6 +759,7 @@ var bisaData = {
     noord_afrika: 3.34,
     sub_sahara: 2.45,
     totaal_vreemdelingen: 5412.0,
+    totale_bevolking: 16790,
   },
   54: {  // Vogelenzang - Erasmus
     andere_landen: 2.17,
@@ -720,6 +773,7 @@ var bisaData = {
     noord_afrika: 5.06,
     sub_sahara: 3.87,
     totaal_vreemdelingen: 497.0,
+    totale_bevolking: 1937,
   },
   55: {  // Neerpede
     andere_landen: 1.45,
@@ -733,6 +787,7 @@ var bisaData = {
     noord_afrika: 2.39,
     sub_sahara: 1.88,
     totaal_vreemdelingen: 713.0,
+    totale_bevolking: 2766,
   },
   56: {  // Goede Lucht
     andere_landen: 1.44,
@@ -746,6 +801,7 @@ var bisaData = {
     noord_afrika: 4.85,
     sub_sahara: 1.91,
     totaal_vreemdelingen: 365.0,
+    totale_bevolking: 1938,
   },
   57: {  // Scherdemaal
     andere_landen: 2.41,
@@ -759,6 +815,7 @@ var bisaData = {
     noord_afrika: 2.16,
     sub_sahara: 1.48,
     totaal_vreemdelingen: 2745.0,
+    totale_bevolking: 11001,
   },
   58: {  // Anderlecht - Centrum - Wayez
     andere_landen: 5.88,
@@ -772,6 +829,7 @@ var bisaData = {
     noord_afrika: 5.59,
     sub_sahara: 2.66,
     totaal_vreemdelingen: 6018.0,
+    totale_bevolking: 15215,
   },
   59: {  // Scheut
     andere_landen: 3.38,
@@ -785,6 +843,7 @@ var bisaData = {
     noord_afrika: 4.16,
     sub_sahara: 1.85,
     totaal_vreemdelingen: 4413.0,
+    totale_bevolking: 14029,
   },
   60: {  // Buffon
     andere_landen: 2.18,
@@ -798,6 +857,7 @@ var bisaData = {
     noord_afrika: 3.62,
     sub_sahara: 1.22,
     totaal_vreemdelingen: 1731.0,
+    totale_bevolking: 5918,
   },
   61: {  // Moortebeek - Peterbos
     andere_landen: 1.7,
@@ -811,6 +871,7 @@ var bisaData = {
     noord_afrika: 4.91,
     sub_sahara: 2.75,
     totaal_vreemdelingen: 2225.0,
+    totale_bevolking: 9652,
   },
   62: {  // Machtens
     andere_landen: 3.3,
@@ -824,6 +885,7 @@ var bisaData = {
     noord_afrika: 3.87,
     sub_sahara: 2.04,
     totaal_vreemdelingen: 6660.0,
+    totale_bevolking: 25853,
   },
   63: {  // Karreveld
     andere_landen: 2.86,
@@ -837,6 +899,7 @@ var bisaData = {
     noord_afrika: 5.96,
     sub_sahara: 2.15,
     totaal_vreemdelingen: 4004.0,
+    totale_bevolking: 14473,
   },
   64: {  // Frans Hospitaal
     andere_landen: 1.74,
@@ -850,6 +913,7 @@ var bisaData = {
     noord_afrika: 2.76,
     sub_sahara: 2.45,
     totaal_vreemdelingen: 3865.0,
+    totale_bevolking: 14060,
   },
   65: {  // Korenbeek
     andere_landen: 1.03,
@@ -863,6 +927,7 @@ var bisaData = {
     noord_afrika: 3.34,
     sub_sahara: 1.78,
     totaal_vreemdelingen: 2197.0,
+    totale_bevolking: 10071,
   },
   66: {  // Potaarde
     andere_landen: 1.38,
@@ -876,6 +941,7 @@ var bisaData = {
     noord_afrika: 1.58,
     sub_sahara: 1.18,
     totaal_vreemdelingen: 513.0,
+    totale_bevolking: 3471,
   },
   67: {  // Sint-Agatha Berchem Centrum
     andere_landen: 1.71,
@@ -889,8 +955,9 @@ var bisaData = {
     noord_afrika: 3.08,
     sub_sahara: 1.68,
     totaal_vreemdelingen: 3487.0,
+    totale_bevolking: 15635,
   },
-  68: {  // Villa\'s van Ganshoren
+  68: {  // Villa's van Ganshoren
     andere_landen: 2.03,
     fransen: 1.4,
     oeso: 0.04,
@@ -902,6 +969,7 @@ var bisaData = {
     noord_afrika: 2.86,
     sub_sahara: 2.29,
     totaal_vreemdelingen: 1370.0,
+    totale_bevolking: 7479,
   },
   69: {  // Ganshoren Centrum
     andere_landen: 1.68,
@@ -915,6 +983,7 @@ var bisaData = {
     noord_afrika: 2.52,
     sub_sahara: 1.7,
     totaal_vreemdelingen: 3286.0,
+    totale_bevolking: 12398,
   },
   70: {  // Basiliek
     andere_landen: 3.15,
@@ -928,6 +997,7 @@ var bisaData = {
     noord_afrika: 2.89,
     sub_sahara: 2.31,
     totaal_vreemdelingen: 5313.0,
+    totale_bevolking: 14380,
   },
   71: {  // Woeste
     andere_landen: 3.48,
@@ -941,6 +1011,7 @@ var bisaData = {
     noord_afrika: 2.97,
     sub_sahara: 1.81,
     totaal_vreemdelingen: 5940.0,
+    totale_bevolking: 20283,
   },
   72: {  // Jette Centrum
     andere_landen: 2.72,
@@ -954,6 +1025,7 @@ var bisaData = {
     noord_afrika: 2.24,
     sub_sahara: 1.47,
     totaal_vreemdelingen: 3377.0,
+    totale_bevolking: 13512,
   },
   73: {  // Heymbosch - AZ-Jette
     andere_landen: 3.17,
@@ -967,6 +1039,7 @@ var bisaData = {
     noord_afrika: 1.78,
     sub_sahara: 2.06,
     totaal_vreemdelingen: 2302.0,
+    totale_bevolking: 9742,
   },
   74: {  // Heizel
     andere_landen: 2.73,
@@ -980,6 +1053,7 @@ var bisaData = {
     noord_afrika: 3.75,
     sub_sahara: 2.02,
     totaal_vreemdelingen: 3932.0,
+    totale_bevolking: 15902,
   },
   75: {  // Houba
     andere_landen: 2.99,
@@ -993,6 +1067,7 @@ var bisaData = {
     noord_afrika: 4.19,
     sub_sahara: 2.25,
     totaal_vreemdelingen: 5639.0,
+    totale_bevolking: 18252,
   },
   76: {  // Mutsaard
     andere_landen: 2.24,
@@ -1006,6 +1081,7 @@ var bisaData = {
     noord_afrika: 2.62,
     sub_sahara: 1.54,
     totaal_vreemdelingen: 4019.0,
+    totale_bevolking: 14649,
   },
   77: {  // Heembeek
     andere_landen: 1.23,
@@ -1019,6 +1095,7 @@ var bisaData = {
     noord_afrika: 3.74,
     sub_sahara: 1.72,
     totaal_vreemdelingen: 3115.0,
+    totale_bevolking: 16706,
   },
   78: {  // Haren
     andere_landen: 1.91,
@@ -1032,6 +1109,7 @@ var bisaData = {
     noord_afrika: 1.85,
     sub_sahara: 1.76,
     totaal_vreemdelingen: 1309.0,
+    totale_bevolking: 6922,
   },
   79: {  // Vrede
     andere_landen: 3.79,
@@ -1045,6 +1123,7 @@ var bisaData = {
     noord_afrika: 3.29,
     sub_sahara: 1.72,
     totaal_vreemdelingen: 3889.0,
+    totale_bevolking: 13363,
   },
   80: {  // Helmet
     andere_landen: 3.58,
@@ -1058,6 +1137,7 @@ var bisaData = {
     noord_afrika: 4.44,
     sub_sahara: 2.26,
     totaal_vreemdelingen: 4226.0,
+    totale_bevolking: 12739,
   },
   81: {  // Schaarbeek Station
     andere_landen: 3.92,
@@ -1071,6 +1151,7 @@ var bisaData = {
     noord_afrika: 4.61,
     sub_sahara: 2.35,
     totaal_vreemdelingen: 2570.0,
+    totale_bevolking: 7746,
   },
   82: {  // Terdelt
     andere_landen: 3.37,
@@ -1084,6 +1165,7 @@ var bisaData = {
     noord_afrika: 2.51,
     sub_sahara: 1.8,
     totaal_vreemdelingen: 2496.0,
+    totale_bevolking: 9225,
   },
   83: {  // Conscience
     andere_landen: 6.45,
@@ -1097,6 +1179,7 @@ var bisaData = {
     noord_afrika: 2.56,
     sub_sahara: 1.48,
     totaal_vreemdelingen: 2780.0,
+    totale_bevolking: 8793,
   },
   84: {  // Leopold III Laan
     andere_landen: 12.42,
@@ -1110,6 +1193,7 @@ var bisaData = {
     noord_afrika: 1.8,
     sub_sahara: 1.67,
     totaal_vreemdelingen: 3609.0,
+    totale_bevolking: 10178,
   },
   85: {  // Josaphat Station
     andere_landen: 4.31,
@@ -1123,6 +1207,7 @@ var bisaData = {
     noord_afrika: 1.77,
     sub_sahara: 1.87,
     totaal_vreemdelingen: 1479.0,
+    totale_bevolking: 4801,
   },
   86: {  // Paduwa
     andere_landen: 8.82,
@@ -1136,6 +1221,7 @@ var bisaData = {
     noord_afrika: 2.51,
     sub_sahara: 1.37,
     totaal_vreemdelingen: 4245.0,
+    totale_bevolking: 13250,
   },
   87: {  // Reyers
     andere_landen: 3.73,
@@ -1149,6 +1235,7 @@ var bisaData = {
     noord_afrika: 3.87,
     sub_sahara: 2.19,
     totaal_vreemdelingen: 1119.0,
+    totale_bevolking: 3695,
   },
   88: {  // Georges Henri
     andere_landen: 3.3,
@@ -1162,6 +1249,7 @@ var bisaData = {
     noord_afrika: 1.11,
     sub_sahara: 0.98,
     totaal_vreemdelingen: 6468.0,
+    totale_bevolking: 16260,
   },
   89: {  // Gribaumont
     andere_landen: 3.13,
@@ -1175,6 +1263,7 @@ var bisaData = {
     noord_afrika: 1.08,
     sub_sahara: 1.33,
     totaal_vreemdelingen: 5221.0,
+    totale_bevolking: 11807,
   },
   90: {  // Roodebeek - Sterrebeelden
     andere_landen: 4.06,
@@ -1188,6 +1277,7 @@ var bisaData = {
     noord_afrika: 1.38,
     sub_sahara: 1.77,
     totaal_vreemdelingen: 5081.0,
+    totale_bevolking: 14943,
   },
   91: {  // Gulledelle
     andere_landen: 6.7,
@@ -1201,6 +1291,7 @@ var bisaData = {
     noord_afrika: 1.45,
     sub_sahara: 1.74,
     totaal_vreemdelingen: 5489.0,
+    totale_bevolking: 12656,
   },
   92: {  // Kapelleveld
     andere_landen: 2.84,
@@ -1214,6 +1305,7 @@ var bisaData = {
     noord_afrika: 4.96,
     sub_sahara: 8.3,
     totaal_vreemdelingen: 2283.0,
+    totale_bevolking: 6276,
   },
   93: {  // Woluwelaan
     andere_landen: 2.6,
@@ -1227,6 +1319,7 @@ var bisaData = {
     noord_afrika: 1.28,
     sub_sahara: 1.46,
     totaal_vreemdelingen: 2144.0,
+    totale_bevolking: 6696,
   },
   94: {  // Stokkel
     andere_landen: 2.55,
@@ -1240,6 +1333,7 @@ var bisaData = {
     noord_afrika: 0.96,
     sub_sahara: 0.89,
     totaal_vreemdelingen: 3800.0,
+    totale_bevolking: 9445,
   },
   95: {  // Sinte-Aleidis - Mooibos
     andere_landen: 1.03,
@@ -1253,6 +1347,7 @@ var bisaData = {
     noord_afrika: 0.46,
     sub_sahara: 0.66,
     totaal_vreemdelingen: 1232.0,
+    totale_bevolking: 4559,
   },
   96: {  // Sint-Paulus
     andere_landen: 2.08,
@@ -1266,6 +1361,7 @@ var bisaData = {
     noord_afrika: 0.61,
     sub_sahara: 0.71,
     totaal_vreemdelingen: 2622.0,
+    totale_bevolking: 7891,
   },
   97: {  // Putdaal
     andere_landen: 4.61,
@@ -1279,6 +1375,7 @@ var bisaData = {
     noord_afrika: 0.47,
     sub_sahara: 0.47,
     totaal_vreemdelingen: 450.0,
+    totale_bevolking: 1475,
   },
   98: {  // Oudergem Centrum
     andere_landen: 3.98,
@@ -1292,6 +1389,7 @@ var bisaData = {
     noord_afrika: 0.89,
     sub_sahara: 1.35,
     totaal_vreemdelingen: 2240.0,
+    totale_bevolking: 5833,
   },
   99: {  // Vogelzang
     andere_landen: 1.77,
@@ -1305,6 +1403,7 @@ var bisaData = {
     noord_afrika: 0.61,
     sub_sahara: 0.62,
     totaal_vreemdelingen: 4454.0,
+    totale_bevolking: 10760,
   },
   100: {  // Waversteenweg - Sint-Juliaan
     andere_landen: 3.55,
@@ -1318,6 +1417,7 @@ var bisaData = {
     noord_afrika: 1.19,
     sub_sahara: 1.28,
     totaal_vreemdelingen: 6116.0,
+    totale_bevolking: 17587,
   },
   101: {  // Drie Linden
     andere_landen: 0.95,
@@ -1331,6 +1431,7 @@ var bisaData = {
     noord_afrika: 2.03,
     sub_sahara: 1.51,
     totaal_vreemdelingen: 1314.0,
+    totale_bevolking: 7332,
   },
   102: {  // Transvaal
     andere_landen: 1.33,
@@ -1344,6 +1445,7 @@ var bisaData = {
     noord_afrika: 1.18,
     sub_sahara: 1.02,
     totaal_vreemdelingen: 1624.0,
+    totale_bevolking: 7049,
   },
   103: {  // Bosvoorde Centrum
     andere_landen: 1.24,
@@ -1357,6 +1459,7 @@ var bisaData = {
     noord_afrika: 0.46,
     sub_sahara: 0.72,
     totaal_vreemdelingen: 1338.0,
+    totale_bevolking: 6148,
   },
   104: {  // Watermaal Centrum
     andere_landen: 1.71,
@@ -1370,6 +1473,7 @@ var bisaData = {
     noord_afrika: 0.95,
     sub_sahara: 1.01,
     totaal_vreemdelingen: 2897.0,
+    totale_bevolking: 10833,
   },
   105: {  // Dries
     andere_landen: 1.78,
@@ -1383,6 +1487,7 @@ var bisaData = {
     noord_afrika: 1.71,
     sub_sahara: 1.16,
     totaal_vreemdelingen: 1559.0,
+    totale_bevolking: 6194,
   },
   106: {  // Boondaal
     andere_landen: 3.15,
@@ -1396,6 +1501,7 @@ var bisaData = {
     noord_afrika: 1.93,
     sub_sahara: 2.1,
     totaal_vreemdelingen: 4195.0,
+    totale_bevolking: 11993,
   },
   107: {  // Universiteitswijk
     andere_landen: 8.32,
@@ -1409,6 +1515,7 @@ var bisaData = {
     noord_afrika: 3.43,
     sub_sahara: 3.85,
     totaal_vreemdelingen: 6574.0,
+    totale_bevolking: 12520,
   },
   108: {  // Montjoie - Langeveld
     andere_landen: 1.89,
@@ -1422,6 +1529,7 @@ var bisaData = {
     noord_afrika: 0.54,
     sub_sahara: 0.89,
     totaal_vreemdelingen: 2424.0,
+    totale_bevolking: 5707,
   },
   109: {  // Observatorium
     andere_landen: 1.77,
@@ -1435,6 +1543,7 @@ var bisaData = {
     noord_afrika: 0.45,
     sub_sahara: 0.97,
     totaal_vreemdelingen: 2799.0,
+    totale_bevolking: 6935,
   },
   110: {  // Fort Jaco
     andere_landen: 1.39,
@@ -1448,6 +1557,7 @@ var bisaData = {
     noord_afrika: 0.55,
     sub_sahara: 0.71,
     totaal_vreemdelingen: 1126.0,
+    totale_bevolking: 3084,
   },
   111: {  // Diesdelle
     andere_landen: 1.47,
@@ -1461,6 +1571,7 @@ var bisaData = {
     noord_afrika: 0.19,
     sub_sahara: 0.63,
     totaal_vreemdelingen: 1041.0,
+    totale_bevolking: 3197,
   },
   112: {  // Kriekenput - Homborch - Verrewinkel
     andere_landen: 0.94,
@@ -1474,6 +1585,7 @@ var bisaData = {
     noord_afrika: 1.68,
     sub_sahara: 1.27,
     totaal_vreemdelingen: 935.0,
+    totale_bevolking: 4885,
   },
   113: {  // Sint-Job Kauwberg
     andere_landen: 1.92,
@@ -1487,6 +1599,7 @@ var bisaData = {
     noord_afrika: 0.42,
     sub_sahara: 0.86,
     totaal_vreemdelingen: 2209.0,
+    totale_bevolking: 6370,
   },
   114: {  // Dieweg
     andere_landen: 1.64,
@@ -1500,6 +1613,7 @@ var bisaData = {
     noord_afrika: 1.02,
     sub_sahara: 0.83,
     totaal_vreemdelingen: 2316.0,
+    totale_bevolking: 6664,
   },
   115: {  // Kalevoet - Moensberg
     andere_landen: 1.56,
@@ -1513,6 +1627,7 @@ var bisaData = {
     noord_afrika: 1.78,
     sub_sahara: 1.67,
     totaal_vreemdelingen: 2873.0,
+    totale_bevolking: 12066,
   },
   116: {  // Globe
     andere_landen: 2.04,
@@ -1526,6 +1641,7 @@ var bisaData = {
     noord_afrika: 1.01,
     sub_sahara: 1.5,
     totaal_vreemdelingen: 5702.0,
+    totale_bevolking: 16487,
   },
   117: {  // Vossegat - Roosendaal
     andere_landen: 1.74,
@@ -1539,6 +1655,7 @@ var bisaData = {
     noord_afrika: 1.06,
     sub_sahara: 1.42,
     totaal_vreemdelingen: 2255.0,
+    totale_bevolking: 8390,
   },
   118: {  // Sint-Denijs - Neerstalle
     andere_landen: 2.76,
@@ -1552,6 +1669,7 @@ var bisaData = {
     noord_afrika: 4.77,
     sub_sahara: 2.82,
     totaal_vreemdelingen: 2924.0,
+    totale_bevolking: 9410,
   },
   700: {  // Kerkhof Brussel
     andere_landen: null,
@@ -1565,6 +1683,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 22,
   },
   701: {  // Kerkhof Elsene
     andere_landen: null,
@@ -1578,6 +1697,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   702: {  // Kerkhof Sint-Gillis
     andere_landen: null,
@@ -1591,6 +1711,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 2,
   },
   800: {  // Industrie Noord
     andere_landen: null,
@@ -1604,6 +1725,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 273.0,
+    totale_bevolking: 1946,
   },
   801: {  // Industrie NATO
     andere_landen: null,
@@ -1617,6 +1739,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 243.0,
+    totale_bevolking: 1036,
   },
   802: {  // Delta
     andere_landen: null,
@@ -1630,6 +1753,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 139.0,
+    totale_bevolking: 236,
   },
   803: {  // Industrie Zuid
     andere_landen: null,
@@ -1643,6 +1767,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 984.0,
+    totale_bevolking: 3646,
   },
   804: {  // Zuidstation
     andere_landen: null,
@@ -1656,6 +1781,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   805: {  // Industrie Birmingham
     andere_landen: null,
@@ -1669,6 +1795,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 242.0,
+    totale_bevolking: 378,
   },
   900: {  // Koninklijk Domein Laken
     andere_landen: null,
@@ -1682,6 +1809,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 30,
   },
   901: {  // Josaphatpark
     andere_landen: null,
@@ -1695,6 +1823,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 8,
   },
   902: {  // Kruidtuin
     andere_landen: null,
@@ -1708,6 +1837,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   903: {  // Jubelpark
     andere_landen: null,
@@ -1721,8 +1851,9 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 19,
   },
-  904: {  // Léopoldpark
+  904: {  // LÃ©opoldpark
     andere_landen: null,
     fransen: null,
     oeso: null,
@@ -1734,6 +1865,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 191,
   },
   905: {  // Park van Woluwe
     andere_landen: null,
@@ -1747,6 +1879,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 127,
   },
   906: {  // Zonienwoud
     andere_landen: null,
@@ -1760,6 +1893,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 115,
   },
   907: {  // Ter Kamerenbos
     andere_landen: null,
@@ -1773,6 +1907,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 1,
   },
   908: {  // Wolvendaelpark
     andere_landen: null,
@@ -1786,6 +1921,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   909: {  // Dudenpark - Park van Vorst
     andere_landen: null,
@@ -1799,6 +1935,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: 195.0,
+    totale_bevolking: 502,
   },
   910: {  // Vijverspark
     andere_landen: null,
@@ -1812,6 +1949,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   911: {  // Astridpark
     andere_landen: null,
@@ -1825,6 +1963,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 3,
   },
   912: {  // Bospark
     andere_landen: null,
@@ -1838,6 +1977,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   913: {  // Marie-Josepark
     andere_landen: null,
@@ -1851,6 +1991,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 0,
   },
   914: {  // Scheutbos
     andere_landen: null,
@@ -1864,6 +2005,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 86,
   },
   915: {  // Elisabethpark
     andere_landen: null,
@@ -1877,6 +2019,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 1,
   },
   916: {  // Laarbeekbos - Poelbos
     andere_landen: null,
@@ -1890,6 +2033,7 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 19,
   },
   917: {  // Boudewijnpark - Dielegembos
     andere_landen: null,
@@ -1903,5 +2047,6 @@ var bisaData = {
     noord_afrika: null,
     sub_sahara: null,
     totaal_vreemdelingen: null,
+    totale_bevolking: 92,
   },
 };

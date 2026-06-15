@@ -47,9 +47,28 @@ function estiloGemeente(feature) {
 function estiloWijkSeleccionado() {
     return {
         fillOpacity: 0.9,
-        color:       '#ffffff',
+        color:       '#088b0f',
         weight:      3,
     };
+}
+
+function traducirPorcentaje(valor) {
+    if (!valor) return '';
+
+    // Tramo alto y medio: 1% o más → "1 op de N"
+    if (valor >= 1) {
+        const n = Math.round(100 / valor);
+        return `1 op de ${n}`;
+    }
+
+    // Tramo bajo: entre 0.1% y 1% → "X op de 1000"
+    if (valor >= 0.1) {
+        const x = Math.round(valor * 10);
+        return `${x} op de 1000`;
+    }
+
+    // Tramo diminuto: menos de 0.1% → texto fijo
+    return 'minder dan 1 op de 1000';
 }
 
 
@@ -133,14 +152,18 @@ if (communeEncontrada) {
             return;
         }
 
-        const valor          = data[categoriaActiva];
-        const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+const valor          = data[categoriaActiva];
+const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+const total          = data.totale_bevolking;
 
-        panel.innerHTML = `
-            <p style="font-size:12px; color:#888; margin-bottom:2px">${gemeenteActiva}</p>
-            <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
-            <p>${nombreCategoria}: ${valor}%</p>
-        `;
+panel.innerHTML = `
+    <p style="font-size:12px; color:#888; margin-bottom:2px">${gemeenteActiva}</p>
+    <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
+    <p>${nombreCategoria}: ${valor}% — ${traducirPorcentaje(valor)}</p>
+    <p style="font-size:13px; color:#555; margin-top:10px">
+        ${total ? total.toLocaleString('nl-BE') + ' inwoners in deze wijk' : ''}
+    </p>
+`;
     });
 }
 
