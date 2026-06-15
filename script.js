@@ -58,17 +58,17 @@ function traducirPorcentaje(valor) {
     // Tramo alto y medio: 1% o más → "1 op de N"
     if (valor >= 1) {
         const n = Math.round(100 / valor);
-        return `1 op de ${n}`;
+        return `${i18n[idiomaActivo].opDe} ${n}`;
     }
 
     // Tramo bajo: entre 0.1% y 1% → "X op de 1000"
     if (valor >= 0.1) {
         const x = Math.round(valor * 10);
-        return `${x} op de 1000`;
+        return `${x} ${i18n[idiomaActivo].opDe1000}`;
     }
 
     // Tramo diminuto: menos de 0.1% → texto fijo
-    return 'minder dan 1 op de 1000';
+    return i18n[idiomaActivo].menosMil;
 }
 
 
@@ -89,12 +89,27 @@ const titulosCategoria = {
     eu_nieuw:        'nieuwe EU-',
     latijns_amerika: 'Latijns-Amerikaanse',
     andere_landen:   'andere',
-};
+}
 
 function actualizarTitulo() {
     const texto = titulosCategoria[categoriaActiva];
     const titulo = document.getElementById('titulo-dinamico');
     titulo.textContent = `Waar wonen Brusselaars van ${texto} herkomst?`;
+}
+
+let idiomaActivo = 'nl';
+
+const i18n = {
+    nl: {
+        opDe:        '1 op de',      // → "1 op de 16"
+        opDe1000:    'op de 1000',   // → "3 op de 1000"
+        menosMil:    'minder dan 1 op de 1000',
+    },
+    fr: {
+        opDe:        '1 sur',
+        opDe1000:    'sur 1000',
+        menosMil:    'moins de 1 sur 1000',
+    },
 }
 
 
