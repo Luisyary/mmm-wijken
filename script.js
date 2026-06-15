@@ -92,9 +92,10 @@ const titulosCategoria = {
 }
 
 function actualizarTitulo() {
-    const texto = titulosCategoria[categoriaActiva];
+    const t = i18n[idiomaActivo];
+    const adjetivo = t.categorias[categoriaActiva].gentilicio;
     const titulo = document.getElementById('titulo-dinamico');
-    titulo.textContent = `Waar wonen Brusselaars van ${texto} herkomst?`;
+    titulo.textContent = `${t.tituloAntes} ${adjetivo} ${t.tituloDespues}`;
 }
 
 let idiomaActivo = 'nl';
@@ -104,32 +105,37 @@ const i18n = {
         opDe:        '1 op de',      // → "1 op de 16"
         opDe1000:    'op de 1000',   // → "3 op de 1000"
         menosMil:    'minder dan 1 op de 1000',
+        tituloAntes: 'Waar wonen Brusselaars van',
+        tituloDespues: 'herkomst?',
         categorias: {
-            noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse' },
-            sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse' },
-            turken:          { boton: 'Turken',         adjetivo: 'Turkse' },
-            fransen:         { boton: 'Fransen',        adjetivo: 'Franse' },
-            europa14:        { boton: 'Europa 14',      adjetivo: 'Europese (14)' },
-            oeso:            { boton: 'OESO',           adjetivo: 'OESO-' },
-            eu_nieuw:        { boton: 'Nieuwe EU',      adjetivo: 'nieuwe EU-' },
-            latijns_amerika: { boton: 'Latijns-Amerika', adjetivo: 'Latijns-Amerikaanse' },
-            andere_landen:   { boton: 'Andere landen',  adjetivo: 'andere' },
+            noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
+            sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
+            turken:          { boton: 'Turken',         adjetivo: 'Turkse', gentilicio: 'Turkse'},
+            fransen:         { boton: 'Fransen',        adjetivo: 'Franse', gentilicio: 'Franse' },
+            europa14:        { boton: 'Europa 14',      adjetivo: 'Europese (14)', gentilicio: 'Europese (14)' },
+            oeso:            { boton: 'OESO',           adjetivo: 'OESO-', gentilicio: 'OESO-' },
+            eu_nieuw:        { boton: 'Nieuwe EU',      adjetivo: 'nieuwe EU-', gentilicio: 'nieuwe EU-' },
+            latijns_amerika: { boton: 'Latijns-Amerika', adjetivo: 'Latijns-Amerikaanse', gentilicio: 'Latijns-Amerikaanse' },
+            andere_landen:   { boton: 'Andere landen',  adjetivo: 'andere', gentilicio: 'andere'},
         },
     },
+    
     fr: {
         opDe:        '1 sur',
         opDe1000:    'sur 1000',
         menosMil:    'moins de 1 sur 1000',
+        tituloAntes: "Où habitent les Bruxellois d'origine",
+        tituloDespues: '?',
         categorias: {
-            noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord" },
-            sub_sahara:      { boton: 'Afrique subsah', adjetivo: "Part de l'Afrique subsaharienne" },
-            turken:          { boton: 'Turquie', adjetivo: 'Part de la Turquie' },
-            fransen:         { boton: 'Français', adjetivo: 'Part des Français' },
-            europa14:        { boton: 'Europe 14', adjetivo: "Part de l'Europe des 14 (hors Belgique)" },
-            oeso:            { boton: 'OCDE', adjetivo: 'Part des pays OCDE' },
-            eu_nieuw:        { boton: 'Nouvelle EU', adjetivo: "Part des nouveaux états membres de l'U.E." },
-            latijns_amerika: { boton: 'Amérique latine', adjetivo: "Part de l'Amérique latine" },
-            andere_landen:   { boton: 'Autres pays', adjetivo: 'Part des autres pays' },
+            noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
+            sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
+            turken:          { boton: 'Turquie', adjetivo: 'Part de la Turquie', gentilicio: 'turque' },
+            fransen:         { boton: 'Français', adjetivo: 'Part des Français', gentilicio: 'française' },
+            europa14:        { boton: 'Europe 14', adjetivo: "Part de l'Europe des 14 (hors Belgique)", gentilicio: "de l'Europe des 14" },
+            oeso:            { boton: 'OCDE', adjetivo: 'Part des pays OCDE', gentilicio: "des pays de l'OCDE" },
+            eu_nieuw:        { boton: 'Nouvelle UE', adjetivo: "Part des nouveaux états membres de l'U.E.", gentilicio: "des nouveaux États membres de l'UE" },
+            latijns_amerika: { boton: 'Amérique latine', adjetivo: "Part de l'Amérique latine", gentilicio: 'latino-américaine' },
+            andere_landen:   { boton: 'Autres pays', adjetivo: 'Part des autres pays', gentilicio: "d'autres pays" },
         },
     },
 }
