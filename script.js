@@ -79,17 +79,6 @@ let wijkSeleccionado = null;
 let gemeenteActiva   = null;
 let communesData = null;
 let gemeenteLayer = null;
-const titulosCategoria = {
-    noord_afrika:    'Noord-Afrikaanse',
-    sub_sahara:      'Sub-Saharaanse',
-    turken:          'Turkse',
-    fransen:         'Franse',
-    europa14:        'Europese (14)',
-    oeso:            'OESO-',
-    eu_nieuw:        'nieuwe EU-',
-    latijns_amerika: 'Latijns-Amerikaanse',
-    andere_landen:   'andere',
-}
 
 function actualizarTitulo() {
     const t = i18n[idiomaActivo];
@@ -107,6 +96,8 @@ const i18n = {
         menosMil:    'minder dan 1 op de 1000',
         tituloAntes: 'Waar wonen Brusselaars van',
         tituloDespues: 'herkomst?',
+        subtitulo: 'Wijkmonitor · Brussels Hoofdstedelijk Gewest',
+        klikWijk: 'Klik op een wijk',
         categorias: {
             noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
             sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
@@ -126,6 +117,8 @@ const i18n = {
         menosMil:    'moins de 1 sur 1000',
         tituloAntes: "Où habitent les Bruxellois d'origine",
         tituloDespues: '?',
+        subtitulo: 'Moniteur des quartiers · Région de Bruxelles-Capitale',
+        klikWijk: 'Cliquez sur un quartier',
         categorias: {
             noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
             sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
