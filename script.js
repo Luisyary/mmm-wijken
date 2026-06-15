@@ -133,6 +133,42 @@ const i18n = {
     },
 }
 
+function aplicarIdioma() {
+    const t = i18n[idiomaActivo];
+
+    // 1. Atributo lang del documento (accesibilidad)
+    document.documentElement.lang = idiomaActivo;
+
+    // 2. Subtítulo del header
+    document.getElementById('subtitulo').textContent = t.subtitulo;
+
+    // 3. Texto de los 9 botones de categoría
+    document.querySelectorAll('.btn-categoria').forEach(btn => {
+        const clave = btn.dataset.categoria;
+        btn.textContent = t.categorias[clave].boton;
+    });
+
+    // 4. Botones de idioma: marcar el activo
+    document.querySelectorAll('.btn-idioma').forEach(btn => {
+        btn.classList.toggle('activo', btn.dataset.idioma === idiomaActivo);
+    });
+
+    // 5. Título dinámico
+    actualizarTitulo();
+
+    // 6. Limpiar la selección (igual que al cambiar de categoría)
+    if (gemeenteLayer) {
+        map.removeLayer(gemeenteLayer);
+        gemeenteLayer = null;
+    }
+    if (wijkSeleccionado) {
+        geojsonLayer.resetStyle(wijkSeleccionado);
+        wijkSeleccionado = null;
+    }
+    gemeenteActiva = null;
+    document.getElementById('panel').innerHTML = `<p id="panel-naam">${t.klikWijk}</p>`;
+}
+
 
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
 function onEachFeature(feature, layer) {
@@ -280,4 +316,13 @@ document.getElementById('panel').innerHTML = '<p id="panel-naam">Klik op een wij
     });
 });
 
+// ── LISTENER DE LOS BOTONES DE IDIOMA ────────────────────────────
+document.querySelectorAll('.btn-idioma').forEach(btn => {
+    btn.addEventListener('click', function () {
+        idiomaActivo = this.dataset.idioma;
+        aplicarIdioma();
+    });
+});
+
 actualizarTitulo();
+aplicarIdioma();
