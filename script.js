@@ -79,6 +79,23 @@ let wijkSeleccionado = null;
 let gemeenteActiva   = null;
 let communesData = null;
 let gemeenteLayer = null;
+const titulosCategoria = {
+    noord_afrika:    'Noord-Afrikaanse',
+    sub_sahara:      'Sub-Saharaanse',
+    turken:          'Turkse',
+    fransen:         'Franse',
+    europa14:        'Europese (14)',
+    oeso:            'OESO-',
+    eu_nieuw:        'nieuwe EU-',
+    latijns_amerika: 'Latijns-Amerikaanse',
+    andere_landen:   'andere',
+};
+
+function actualizarTitulo() {
+    const texto = titulosCategoria[categoriaActiva];
+    const titulo = document.getElementById('titulo-dinamico');
+    titulo.textContent = `Waar wonen Brusselaars van ${texto} herkomst?`;
+}
 
 
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
@@ -205,6 +222,7 @@ document.querySelectorAll('.btn-categoria').forEach(btn => {
         this.classList.add('activo');
         categoriaActiva = this.dataset.categoria;
         geojsonLayer.setStyle(estiloWijk);
+        actualizarTitulo();
 
         // Limpiar selección al cambiar categoría
 if (gemeenteLayer) {
@@ -225,3 +243,5 @@ document.getElementById('panel').innerHTML = '<p id="panel-naam">Klik op een wij
         }
     });
 });
+
+actualizarTitulo();

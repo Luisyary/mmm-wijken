@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header id="encabezado">
+    <span id="museo-naam">MigratieMuseumMigration</span>
+    <span id="subtitulo">Wijkmonitor · Brussels Hoofdstedelijk Gewest</span>
+</header>
+
+<h1 id="titulo-dinamico">Waar wonen Brusselaars?</h1>
+
     <div id="barra-botones">
     <button class="btn-categoria activo" data-categoria="noord_afrika">Noord-Afrika</button>
     <button class="btn-categoria" data-categoria="sub_sahara">Sub-Sahara</button>
@@ -30,6 +37,11 @@
     <p id="panel-naam">Klik op een wijk</p>
 </div>
 
+    <div id="barra-año">
+    <span id="año-label">2025</span>
+    <input type="range" id="slider-año" min="2025" max="2025" value="2025" step="1">
+</div>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -42,10 +54,7 @@
     <!-- Tu lógica -->
     <script src="script.js"></script>
 
-    <div id="barra-año">
-    <span id="año-label">2025</span>
-    <input type="range" id="slider-año" min="2025" max="2025" value="2025" step="1">
-</div>
+
 
 </body>
 </html>
