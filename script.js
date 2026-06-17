@@ -234,16 +234,19 @@ if (communeEncontrada) {
         style: estiloGemeente,
         interactive: false
     }).addTo(map);
-    gemeenteActiva = communeEncontrada.properties.name_nl;
+    const campoGemeente = idiomaActivo === 'fr' ? 'name_fr' : 'name_nl';
+    gemeenteActiva = communeEncontrada.properties[campoGemeente];
 }
 
-        // Actualizar panel
-        const panel = document.getElementById('panel');
+    // Actualizar panel
+    const panel = document.getElementById('panel');
+        
+    const campoWijk = idiomaActivo === 'fr' ? 'namefre' : 'namedut';
 
-        if (!data) {
-            panel.innerHTML = '<p>Geen data beschikbaar</p>';
-            return;
-        }
+     if (!data) {
+         panel.innerHTML = '<p>Geen data beschikbaar</p>';
+        return;
+    }
 
 const valor          = data[categoriaActiva];
 const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
@@ -251,7 +254,7 @@ const total          = data.totale_bevolking;
 
 panel.innerHTML = `
     <p style="font-size:12px; color:#888; margin-bottom:2px">${gemeenteActiva}</p>
-    <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
+    <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props[campoWijk]}</p>
     <p>${nombreCategoria}: ${valor}% — ${traducirPorcentaje(valor)}</p>
     <p style="font-size:13px; color:#555; margin-top:10px">
         ${total ? total.toLocaleString(i18n[idiomaActivo].locale) + ' ' + i18n[idiomaActivo].inwoners : ''}
