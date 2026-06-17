@@ -98,6 +98,8 @@ const i18n = {
         tituloDespues: 'herkomst?',
         subtitulo: 'Wijkmonitor · Brussels Hoofdstedelijk Gewest',
         klikWijk: 'Klik op een wijk',
+        inwoners: 'inwoners in deze wijk',
+        locale: 'nl-BE',
         categorias: {
             noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
             sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
@@ -119,6 +121,8 @@ const i18n = {
         tituloDespues: '?',
         subtitulo: 'Moniteur des quartiers · Région de Bruxelles-Capitale',
         klikWijk: 'Cliquez sur un quartier',
+        inwoners: 'habitants dans ce quartier',
+        locale: 'fr-BE',
         categorias: {
             noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
             sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
@@ -250,7 +254,7 @@ panel.innerHTML = `
     <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props.namedut}</p>
     <p>${nombreCategoria}: ${valor}% — ${traducirPorcentaje(valor)}</p>
     <p style="font-size:13px; color:#555; margin-top:10px">
-        ${total ? total.toLocaleString('nl-BE') + ' inwoners in deze wijk' : ''}
+        ${total ? total.toLocaleString(i18n[idiomaActivo].locale) + ' ' + i18n[idiomaActivo].inwoners : ''}
     </p>
 `;
     });
