@@ -123,3 +123,13 @@ html, body {
     font-size: 20px;
     max-width: 500px;
 }
+
+.waffle {
+    display: grid;
+    grid-template-columns: repeat(10, 12px);
+    gap: 2px;
+    width: max-content;
+}
+.casilla { width: 12px; height: 12px; }
+.casilla.pintada { background: #b5391f; }
+.casilla.vacia   { background: #d6d6d2; }

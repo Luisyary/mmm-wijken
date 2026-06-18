@@ -98,8 +98,13 @@ const i18n = {
         tituloDespues: 'herkomst?',
         subtitulo: 'Wijkmonitor · Brussels Hoofdstedelijk Gewest',
         klikWijk: 'Klik op een wijk',
-        inwoners: 'inwoners in deze wijk',
         locale: 'nl-BE',
+        vanDe: 'van de',
+        inwoners: 'inwoners',          // puede que ya lo tengas
+        menosDe1: 'te klein om in vakjes te tonen',
+        geschat: 'geschat — afgeleid van het afgeronde percentage',
+        sinData: 'Geen data beschikbaar',
+        menosDe1Inwoner: 'minder dan 1 inwoner',
         categorias: {
             noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
             sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
@@ -121,8 +126,13 @@ const i18n = {
         tituloDespues: '?',
         subtitulo: 'Moniteur des quartiers · Région de Bruxelles-Capitale',
         klikWijk: 'Cliquez sur un quartier',
-        inwoners: 'habitants dans ce quartier',
         locale: 'fr-BE',
+        vanDe: 'sur',
+        inwoners: 'habitants',
+        geschat: 'estimation — dérivée du pourcentage arrondi',
+        menosDe1: 'trop petit pour être affiché en cases',
+        sinData: 'Aucune donnée disponible',
+        menosDe1Inwoner: "moins d'un habitant",
         categorias: {
             noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
             sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
@@ -173,6 +183,20 @@ function aplicarIdioma() {
     document.getElementById('panel').innerHTML = `<p id="panel-naam">${t.klikWijk}</p>`;
 }
 
+function construirWaffle(celdas) {
+    // Regla del umbral: si redondea a 0, no hay grid
+    if (celdas === 0) {
+        return `<p class="waffle-umbral">${i18n[idiomaActivo].menosDe1}</p>`;
+    }
+
+    // Grid de 100 casillas
+    let casillas = '';
+    for (let i = 0; i < 100; i++) {
+        const clase = i < celdas ? 'pintada' : 'vacia';
+        casillas += `<span class="casilla ${clase}"></span>`;
+    }
+    return `<div class="waffle">${casillas}</div>`;
+}
 
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
 function onEachFeature(feature, layer) {
@@ -248,17 +272,27 @@ if (communeEncontrada) {
         return;
     }
 
+if (!data || data[categoriaActiva] == null || data.totale_bevolking == null) {
+    panel.innerHTML = `<p>${i18n[idiomaActivo].sinData}</p>`;
+    return;
+}
+
 const valor          = data[categoriaActiva];
-const nombreCategoria = document.querySelector('.btn-categoria.activo').textContent;
+const nombreCategoria = i18n[idiomaActivo].categorias[categoriaActiva].boton;
 const total          = data.totale_bevolking;
+const redondeado = Math.round(valor);               // casillas a pintar en el waffle
+const personas   = Math.round(valor / 100 * total); // el "± X" de personas estimadas
+const lineaPersonas = personas === 0
+    ? i18n[idiomaActivo].menosDe1Inwoner
+    : `± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}`;
 
 panel.innerHTML = `
-    <p style="font-size:12px; color:#888; margin-bottom:2px">${gemeenteActiva}</p>
-    <p style="font-weight:bold; font-size:16px; margin-bottom:8px">${props[campoWijk]}</p>
-    <p>${nombreCategoria}: ${valor}% — ${traducirPorcentaje(valor)}</p>
-    <p style="font-size:13px; color:#555; margin-top:10px">
-        ${total ? total.toLocaleString(i18n[idiomaActivo].locale) + ' ' + i18n[idiomaActivo].inwoners : ''}
-    </p>
+    <p class="panel-gemeente">${gemeenteActiva}</p>
+    <p class="panel-wijk">${props[campoWijk]}</p>
+    <p class="panel-cat"><strong>${valor.toLocaleString(i18n[idiomaActivo].locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</strong> ${nombreCategoria}</p>
+    ${construirWaffle(redondeado)}
+    <p class="panel-personas">± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}</p>
+    <p class="panel-nota">${i18n[idiomaActivo].geschat}</p>
 `;
     });
 }
