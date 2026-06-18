@@ -106,6 +106,8 @@ const i18n = {
         geschat: 'geschat — afgeleid van het afgeronde percentage',
         sinData: 'Geen data beschikbaar',
         menosDe1Inwoner: 'minder dan 1 inwoner',
+        sinDataAnioAntes: 'Geen data voor',
+        sinDataAnioDespues: 'vóór',
         categorias: {
             noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
             sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
@@ -134,6 +136,8 @@ const i18n = {
         menosDe1: 'trop petit pour être affiché en cases',
         sinData: 'Aucune donnée disponible',
         menosDe1Inwoner: "moins d'un habitant",
+        sinDataAnioAntes: "Pas de données pour",
+        sinDataAnioDespues: 'avant',
         categorias: {
             noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
             sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
@@ -303,6 +307,17 @@ if (communeEncontrada) {
     });
 }
 
+function actualizarMensajeAnio() {
+    const mensaje    = document.getElementById('mensaje-anio');
+    const primerAnio = rangosCategoria[categoriaActiva][0];
+
+    if (anioActivo < primerAnio) {
+        mensaje.textContent = `${i18n[idiomaActivo].sinDataAnioAntes} ${i18n[idiomaActivo].categorias[categoriaActiva].boton} ${i18n[idiomaActivo].sinDataAnioDespues} ${primerAnio}`;
+    } else {
+        mensaje.textContent = '';
+    }
+}
+
 // — CARGAR COMMUNES ————————————————————————————
 fetch('data/communes.geojson')
     .then(response => response.json())
@@ -342,6 +357,7 @@ document.querySelectorAll('.btn-categoria').forEach(btn => {
         categoriaActiva = this.dataset.categoria;
         geojsonLayer.setStyle(estiloWijk);
         actualizarTitulo();
+        actualizarMensajeAnio();
 
         // Limpiar selección al cambiar categoría
 if (gemeenteLayer) {
@@ -382,7 +398,9 @@ slider.addEventListener('input', function () {
     if (wijkSeleccionado) {                      // 4. si hay wijk seleccionado,
         actualizarPanel(wijkSeleccionado);      //    repintar el panel con el año nuevo
     }
+    actualizarMensajeAnio(); 
 });
 
 actualizarTitulo();
 aplicarIdioma();
+actualizarMensajeAnio(); 
