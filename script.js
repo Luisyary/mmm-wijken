@@ -25,7 +25,7 @@ function getColor(value) {
 
 function estiloWijk(feature) {
     const mdzone = feature.properties.mdzone;
-    const data   = bisaData[mdzone];
+    const data = bisaData[anioActivo][mdzone];
     const valor  = data ? data[categoriaActiva] : null;
     return {
         fillColor:   getColor(valor),
@@ -75,6 +75,7 @@ function traducirPorcentaje(valor) {
 // ── 3. ESTADO ────────────────────────────────────────────────────
 let geojsonLayer;
 let categoriaActiva  = 'noord_afrika';
+let anioActivo = 2025;
 let wijkSeleccionado = null;
 let gemeenteActiva   = null;
 let communesData = null;
@@ -198,11 +199,46 @@ function construirWaffle(celdas) {
     return `<div class="waffle">${casillas}</div>`;
 }
 
+function actualizarPanel(layer) {
+    const props   = layer.feature.properties;
+    const mdzone  = props.mdzone;
+    const data    = bisaData[anioActivo][mdzone];
+
+    const panel     = document.getElementById('panel');
+    const campoWijk = idiomaActivo === 'fr' ? 'namefre' : 'namedut';
+
+    if (!data) {
+        panel.innerHTML = '<p>Geen data beschikbaar</p>';
+        return;
+    }
+
+    if (data[categoriaActiva] == null || data.totale_bevolking == null) {
+        panel.innerHTML = `
+            <p class="panel-gemeente">${gemeenteActiva}</p>
+            <p class="panel-wijk">${props[campoWijk]}</p>
+            <p class="panel-nodata">${i18n[idiomaActivo].sinData}</p>
+        `;
+        return;
+    }
+
+    const valor          = data[categoriaActiva];
+    const nombreCategoria = i18n[idiomaActivo].categorias[categoriaActiva].boton;
+    const total          = data.totale_bevolking;
+    const redondeado = Math.round(valor);
+    const personas   = Math.round(valor / 100 * total);
+
+    panel.innerHTML = `
+        <p class="panel-gemeente">${gemeenteActiva}</p>
+        <p class="panel-wijk">${props[campoWijk]}</p>
+        <p class="panel-cat"><strong>${valor.toLocaleString(i18n[idiomaActivo].locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</strong> ${nombreCategoria}</p>
+        ${construirWaffle(redondeado)}
+        <p class="panel-personas">± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}</p>
+        <p class="panel-nota">${i18n[idiomaActivo].geschat}</p>
+    `;
+}
+
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
 function onEachFeature(feature, layer) {
-    const props  = feature.properties;
-    const mdzone = props.mdzone;
-    const data   = bisaData[mdzone];
 
     layer.on('mouseover', function () {
         if (layer !== wijkSeleccionado) {
@@ -263,41 +299,7 @@ if (communeEncontrada) {
 }
 
     // Actualizar panel
-    const panel = document.getElementById('panel');
-        
-    const campoWijk = idiomaActivo === 'fr' ? 'namefre' : 'namedut';
-
-     if (!data) {
-         panel.innerHTML = '<p>Geen data beschikbaar</p>';
-        return;
-    }
-
-if (!data || data[categoriaActiva] == null || data.totale_bevolking == null) {
-    panel.innerHTML = `
-        <p class="panel-gemeente">${gemeenteActiva}</p>
-        <p class="panel-wijk">${props[campoWijk]}</p>
-        <p class="panel-nodata">${i18n[idiomaActivo].sinData}</p>
-    `;
-    return;
-}
-
-const valor          = data[categoriaActiva];
-const nombreCategoria = i18n[idiomaActivo].categorias[categoriaActiva].boton;
-const total          = data.totale_bevolking;
-const redondeado = Math.round(valor);               // casillas a pintar en el waffle
-const personas   = Math.round(valor / 100 * total); // el "± X" de personas estimadas
-const lineaPersonas = personas === 0
-    ? i18n[idiomaActivo].menosDe1Inwoner
-    : `± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}`;
-
-panel.innerHTML = `
-    <p class="panel-gemeente">${gemeenteActiva}</p>
-    <p class="panel-wijk">${props[campoWijk]}</p>
-    <p class="panel-cat"><strong>${valor.toLocaleString(i18n[idiomaActivo].locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</strong> ${nombreCategoria}</p>
-    ${construirWaffle(redondeado)}
-    <p class="panel-personas">± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}</p>
-    <p class="panel-nota">${i18n[idiomaActivo].geschat}</p>
-`;
+ actualizarPanel(layer);
     });
 }
 
@@ -367,6 +369,19 @@ document.querySelectorAll('.btn-idioma').forEach(btn => {
         idiomaActivo = this.dataset.idioma;
         aplicarIdioma();
     });
+});
+
+// ── 7. SLIDER DE AÑOS ────────────────────────────────────────────
+const slider     = document.getElementById('slider-año');
+const anioLabel  = document.getElementById('año-label');
+
+slider.addEventListener('input', function () {
+    anioActivo = Number(slider.value);          // 1. guardar el año (texto → número)
+    anioLabel.textContent = anioActivo;         // 2. actualizar el número visible
+    geojsonLayer.setStyle(estiloWijk);          // 3. repintar el mapa con el año nuevo
+    if (wijkSeleccionado) {                      // 4. si hay wijk seleccionado,
+        actualizarPanel(wijkSeleccionado);      //    repintar el panel con el año nuevo
+    }
 });
 
 actualizarTitulo();
