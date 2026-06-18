@@ -273,7 +273,11 @@ if (communeEncontrada) {
     }
 
 if (!data || data[categoriaActiva] == null || data.totale_bevolking == null) {
-    panel.innerHTML = `<p>${i18n[idiomaActivo].sinData}</p>`;
+    panel.innerHTML = `
+        <p class="panel-gemeente">${gemeenteActiva}</p>
+        <p class="panel-wijk">${props[campoWijk]}</p>
+        <p class="panel-nodata">${i18n[idiomaActivo].sinData}</p>
+    `;
     return;
 }
 
