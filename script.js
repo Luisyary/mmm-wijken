@@ -174,6 +174,7 @@ function aplicarIdioma() {
 
     // 5. Título dinámico
     actualizarTitulo();
+    actualizarMensajeAnio(); 
 
     // 6. Limpiar la selección (igual que al cambiar de categoría)
     if (gemeenteLayer) {
