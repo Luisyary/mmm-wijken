@@ -522,3 +522,120 @@ input[type="range"] { font: inherit; }
   opacity: 0.5;
   padding-top: 8px;
 }
+
+/* ============================================
+   SLIDER
+   ============================================ */
+
+#barra-año {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 40px;
+}
+
+#jaar-label {
+  font-family: var(--font-base);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--inkt);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+#año-prev,
+#año-next {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--inkt);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--inkt);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#año-prev:hover,
+#año-next:hover {
+  background: var(--inkt);
+  color: var(--papier);
+}
+
+#slider-wrap {
+  position: relative;
+  flex: 1;
+  padding-top: 22px;
+}
+
+#slider-rail {
+  display: flex;
+  height: 8px;
+  border: 1px solid var(--inkt);
+}
+.rail-segment { flex: 1; }
+.rail-segment[data-era="94-01"] { background: var(--era-94-01); }
+.rail-segment[data-era="02-09"] { background: var(--era-02-09); }
+.rail-segment[data-era="10-17"] { background: var(--era-10-17); }
+.rail-segment[data-era="18-25"] { background: var(--era-18-25); }
+
+#slider-año {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  height: 8px;    /* antes 5px, para que coincida con el rail */
+}
+/* thumb (el "agarradero" del slider) — WebKit / Safari */
+#slider-año::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  margin-top: -5.5px;
+}
+
+#slider-tooltip {
+  position: absolute;
+  top: -6px;
+  transform: translateX(-50%);
+  background: var(--inkt);
+  color: var(--papier);
+  font-family: var(--font-base);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+#slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-base);
+  font-size: 10px;
+  color: var(--inkt);
+  opacity: 0.5;
+}
+
+#año-label {
+  font-family: var(--font-base);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--inkt);
+  flex-shrink: 0;
+  min-width: 46px;
+  text-align: right;
+}
