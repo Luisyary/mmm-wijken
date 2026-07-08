@@ -3,13 +3,9 @@ const map = L.map('map', {
     center: [50.846, 4.352],
     zoom: 12,
     zoomControl: false,
+    minZoom: 12,     // nuevo — no se puede alejar más que esto
+    maxZoom: 15,     // nuevo — no se puede acercar más que esto
 });
-
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© OpenStreetMap contributors © CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19,
-}).addTo(map);
 
 
 // ── 2. COLOREAR SEGÚN DATOS BISA ─────────────────────────────────
@@ -85,7 +81,7 @@ function actualizarTitulo() {
     const t = i18n[idiomaActivo];
     const adjetivo = t.categorias[categoriaActiva].gentilicio;
     const titulo = document.getElementById('titulo-dinamico');
-    titulo.textContent = `${t.tituloAntes} ${adjetivo} ${t.tituloDespues}`;
+    titulo.innerHTML = `${t.tituloAntes} <span id="herkomst-woord">${adjetivo}</span> ${t.tituloDespues}`;
 }
 
 let idiomaActivo = 'nl';
@@ -342,7 +338,8 @@ fetch('data/quartiers.geojson')
             onEachFeature: onEachFeature,
         }).addTo(map);
 
-        map.fitBounds(geojsonLayer.getBounds());
+           map.fitBounds(geojsonLayer.getBounds(), {
+    });
         console.log('✅ GeoJSON + BISA conectados');
     })
     .catch(error => {

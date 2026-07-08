@@ -107,7 +107,7 @@ input[type="range"] { font: inherit; }
 }
 
 #subtitulo {
-  font-family: var(--font-narrow);
+  font-family: var(--font-base);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -122,7 +122,7 @@ input[type="range"] { font: inherit; }
 }
 
 .btn-idioma {
-  font-family: var(--font-narrow);
+  font-family: var(--font-base);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -133,4 +133,191 @@ input[type="range"] { font: inherit; }
 .btn-idioma.activo {
   background: var(--inkt);
   color: var(--papier);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+#hero {
+  padding: 28px 40px 20px;
+}
+
+#eyebrow {
+  font-family: var(--font-base);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: 8px;
+}
+
+#titulo-dinamico {
+  font-weight: 600;
+  font-size: 54px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--inkt);
+  white-space: nowrap;
+}
+
+#herkomst-woord {
+  font-weight: 600;
+  font-style: italic;
+  border-bottom: 3px solid var(--magenta);
+  padding-bottom: 2px;
+}
+
+/* ============================================
+   SELECTOR DE CATEGORÍAS
+   ============================================ */
+
+#selector-categorias {
+  padding: 12px 40px 20px;
+  border-bottom: 1px solid var(--park);
+  display: flex;          /* nuevo */
+  align-items: center;    /* nuevo */
+  gap: 16px;               /* nuevo */
+}
+
+#kies-herkomst-label {
+  font-family: var(--font-base);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--inkt);
+  opacity: 0.6;
+  flex-shrink: 0;          /* nuevo — que no se comprima el label */
+}
+
+#barra-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-categoria {
+  font-family: var(--font-base);
+  font-size: 13px;
+  font-weight: 700;
+  font-width: 100;
+  padding: 7px 14px;
+  border: 1.5px solid var(--inkt);
+  color: var(--inkt);
+  background: var(--papier);
+  white-space: nowrap;
+}
+
+.btn-categoria:hover {
+  background: var(--park);
+}
+
+.btn-categoria.activo {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: var(--papier);
+}
+
+/* ============================================
+   MAPA
+   ============================================ */
+
+#map-frame {
+  border: 1.5px solid var(--inkt);
+  background-color: var(--water);
+  background-image: radial-gradient(var(--inkt) 1px, transparent 1px);
+  background-size: 14px 14px;
+  background-position: 7px 7px;
+  opacity: 1;
+}
+
+/* El agua de puntos va detrás del mapa Leaflet — Leaflet crea sus propios
+   tiles/panes encima, así que el fondo se ve solo donde no hay geometría */
+#map {
+  background: transparent;
+}
+
+/* --- esquinas decorativas + --- */
+.hoek {
+  position: absolute;
+  font-family: var(--font-base);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--inkt);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 500;
+}
+.hoek-tl { top: 14px;    left: 14px; }
+.hoek-tr { top: 14px;    right: 14px; }
+.hoek-bl { bottom: 14px; left: 14px; }
+.hoek-br { bottom: 14px; right: 14px; }
+
+/* --- leyenda --- */
+#legenda {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 500;
+  background: var(--papier);
+  border: 2px solid var(--inkt);      /* antes 1.5px */
+  padding: 14px 18px;
+  width: 300px;
+  box-sizing: border-box;
+}
+
+#legenda-titel {
+  font-family: var(--font-base);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--inkt);
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+#legenda-schaal {
+  display: flex;
+  height: 14px;                        /* antes 10px, un poco más alta */
+  border: 1.5px solid var(--inkt);     /* nuevo — marco alrededor de toda la barra */
+}
+
+.legenda-stap {
+  flex: 1;
+  border-right: 1.5px solid var(--inkt);  /* nuevo — línea entre segmentos */
+}
+
+.legenda-stap:last-child {
+     border-right: none;
+   }
+
+.legenda-stap:nth-child(1) { background: color-mix(in srgb, var(--acento-actief) 15%, var(--papier)); }
+.legenda-stap:nth-child(2) { background: color-mix(in srgb, var(--acento-actief) 35%, var(--papier)); }
+.legenda-stap:nth-child(3) { background: color-mix(in srgb, var(--acento-actief) 55%, var(--papier)); }
+.legenda-stap:nth-child(4) { background: color-mix(in srgb, var(--acento-actief) 75%, var(--papier)); }
+.legenda-stap:nth-child(5) { background: var(--acento-actief); }
+
+#legenda-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-base);
+  font-size: 9px;
+  color: var(--inkt);
+  opacity: 0.6;
+  margin-top: 3px;
+}
+
+#legenda-nota {
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--inkt);
+  opacity: 0.55;
+  margin-top: 10px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;    /* nuevo */
 }
