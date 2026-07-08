@@ -12,40 +12,99 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header id="encabezado">
-    <span id="museo-naam">MigratieMuseumMigration</span>
-    <span id="subtitulo">Wijkmonitor · Brussels Hoofdstedelijk Gewest</span>
-    <div id="toggle-idioma">
-        <button class="btn-idioma activo" data-idioma="nl">NL</button>
-        <button class="btn-idioma" data-idioma="fr">FR</button>
+        <span id="museo-naam">MigratieMuseumMigration</span>
+        <span id="subtitulo">Wijkmonitor · Brussels Hoofdstedelijk Gewest</span>
+        <div id="toggle-idioma">
+            <button class="btn-idioma activo" data-idioma="nl">NL</button>
+            <button class="btn-idioma" data-idioma="fr">FR</button>
+        </div>
+    </header>
+
+    <div id="hero">
+        <p id="eyebrow">Aandeel van de bevolking · naar herkomst</p>
+        <!-- ⚠ el span interior es nuevo: script.js hoy probablemente
+             hace textContent sobre todo el h1. Lo dejamos así para
+             poder maquetar el subrayado magenta; lo conectamos
+             cuando toquemos el bloque de JS. -->
+        <h1 id="titulo-dinamico">Waar wonen Brusselaars van <span id="herkomst-woord">Noord-Afrikaanse</span> herkomst?</h1>
     </div>
-</header>
 
-<h1 id="titulo-dinamico">Waar wonen Brusselaars?</h1>
+    <div id="selector-categorias">
+        <p id="kies-herkomst-label">Kies herkomst</p>
+        <div id="barra-botones">
+            <button class="btn-categoria activo" data-categoria="noord_afrika">Noord-Afrika</button>
+            <button class="btn-categoria" data-categoria="sub_sahara">Sub-Sahara</button>
+            <button class="btn-categoria" data-categoria="turken">Turken</button>
+            <button class="btn-categoria" data-categoria="fransen">Fransen</button>
+            <button class="btn-categoria" data-categoria="europa14">Europa 14</button>
+            <button class="btn-categoria" data-categoria="oeso">OESO</button>
+            <button class="btn-categoria" data-categoria="eu_nieuw">Nieuwe EU</button>
+            <button class="btn-categoria" data-categoria="latijns_amerika">Latijns-Amerika</button>
+            <button class="btn-categoria" data-categoria="andere_landen">Andere landen</button>
+        </div>
+    </div>
 
-    <div id="barra-botones">
-    <button class="btn-categoria activo" data-categoria="noord_afrika">Noord-Afrika</button>
-    <button class="btn-categoria" data-categoria="sub_sahara">Sub-Sahara</button>
-    <button class="btn-categoria" data-categoria="turken">Turken</button>
-    <button class="btn-categoria" data-categoria="fransen">Fransen</button>
-    <button class="btn-categoria" data-categoria="europa14">Europa 14</button>
-    <button class="btn-categoria" data-categoria="oeso">OESO</button>
-    <button class="btn-categoria" data-categoria="eu_nieuw">Nieuwe EU</button>
-    <button class="btn-categoria" data-categoria="latijns_amerika">Latijns-Amerika</button>
-    <button class="btn-categoria" data-categoria="andere_landen">Andere landen</button>
-</div>
+    <div id="main">
 
-    <div id="map"></div>
+        <div id="map-columna">
+            <div id="map-frame">
+                <div id="map"></div>
 
-    <p id="mensaje-anio"></p>
-    <div id="panel">
-    <p id="panel-naam">Klik op een wijk</p>
-</div>
+                <!-- esquinas decorativas, no funcionales -->
+                <div class="hoek hoek-tl" aria-hidden="true">+</div>
+                <div class="hoek hoek-tr" aria-hidden="true">+</div>
+                <div class="hoek hoek-bl" aria-hidden="true">+</div>
+                <div class="hoek hoek-br" aria-hidden="true">+</div>
+
+                <div id="legenda">
+                    <p id="legenda-titel">Aandeel <span id="legenda-categorie-naam">Noord-Afrika</span></p>
+                    <div id="legenda-schaal">
+                        <span class="legenda-stap"></span>
+                        <span class="legenda-stap"></span>
+                        <span class="legenda-stap"></span>
+                        <span class="legenda-stap"></span>
+                        <span class="legenda-stap"></span>
+                    </div>
+                    <div id="legenda-labels">
+                        <span>0%</span><span>10%</span><span>25%+</span>
+                    </div>
+                    <p id="legenda-nota">Grijs = park · bos · domein · geen data</p>
+                </div>
+            </div>
+
+            <p id="mensaje-anio"></p>
+        </div>
+
+        <!-- ⚠ contenido generado por script.js — no tocar aquí -->
+        <div id="panel">
+            <p id="panel-naam">Klik op een wijk</p>
+        </div>
+
+    </div>
 
     <div id="barra-año">
-    <span id="año-label">2025</span>
-    <input type="range" id="slider-año" min="1994" max="2025" value="2025" step="1">
-</div>
+        <span id="jaar-label">Jaar</span>
+        <button id="año-prev" aria-label="Vorig jaar">‹</button>
+
+        <div id="slider-wrap">
+            <div id="slider-rail">
+                <span class="rail-segment" data-era="94-01"></span>
+                <span class="rail-segment" data-era="02-09"></span>
+                <span class="rail-segment" data-era="10-17"></span>
+                <span class="rail-segment" data-era="18-25"></span>
+            </div>
+            <input type="range" id="slider-año" min="1994" max="2025" value="2025" step="1">
+            <div id="slider-tooltip">2025</div>
+            <div id="slider-ticks">
+                <span>1994</span><span>2002</span><span>2010</span><span>2018</span><span>2025</span>
+            </div>
+        </div>
+
+        <button id="año-next" aria-label="Volgend jaar">›</button>
+        <span id="año-label">2025</span>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -58,8 +117,6 @@
 
     <!-- Tu lógica -->
     <script src="script.js"></script>
-
-
 
 </body>
 </html>

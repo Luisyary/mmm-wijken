@@ -1,148 +1,91 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ============================================
+   MMM WIJKMONITOR — ATLAS VIVO
+   Fundamento: variables, reset, tipografía, skeleton
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600&family=Archivo+Narrow:wght@400;500;600;700&display=swap');
+
+:root {
+  /* --- tintas base --- */
+  --papier:  #FDFDFB;
+  --water:   #C4E6F4;
+  --inkt:    #1F2440;
+  --magenta: #E6007E;
+  --park:    #E2E6E1;
+
+  /* --- tintas de era --- */
+  --era-94-01: #0F8F85;
+  --era-02-09: #6A4FC0;
+  --era-10-17: #e98300;
+  --era-18-25: #7D1149;
+
+  /* acento activo — el JS lo reasigna según anioActivo (bloque futuro) */
+  --acento-actief: var(--era-10-17);
+
+  /* --- tipografía --- */
+  --font-base:   'Archivo', system-ui, sans-serif;
+  --font-narrow: 'Archivo Narrow', var(--font-base);
 }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #1a1a2e;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden; /* kiosco fijo: sin scroll de página */
 }
 
-#map {
-    width: 100%;
-    height: 100%;
+body {
+  font-family: var(--font-base);
+  background: var(--papier);
+  color: var(--inkt);
+  font-size: 14px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
 }
 
-#panel {
-    position: absolute;
-    bottom: 80px;
-    left: 30px;
-    z-index: 1000;
-    background: white;
-    padding: 16px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    min-width: 220px;
-    font-family: sans-serif;
-    font-size: 14px;
-}
+button { font: inherit; cursor: pointer; background: none; border: none; }
+input[type="range"] { font: inherit; }
 
-#panel-naam {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-#barra-botones {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.95);
-}
-
-.btn-categoria {
-    padding: 8px 16px;
-    border: 2px solid #ccc;
-    border-radius: 20px;
-    background: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.btn-categoria.activo {
-    background: #2171b5;
-    color: white;
-    border-color: #2171b5;
-}
-
-#barra-año {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 24px;
-    background: rgba(255,255,255,0.95);
-}
-
-#año-label {
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 50px;
-}
-
-#slider-año {
-    flex: 1;
-    height: 6px;
-    cursor: pointer;
-}
+/* ============================================
+   SKELETON — estructura general de la pantalla
+   ============================================ */
 
 #encabezado {
-    position: absolute;
-    top: 60px;        /* debajo de los botones */
-    left: 16px;
-    z-index: 1000;
-    background: rgba(255,255,255,0.95);
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-family: sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-#museo-naam {
-    font-weight: bold;
-    display: block;
+#hero { flex-shrink: 0; }
+
+#selector-categorias { flex-shrink: 0; }
+
+#main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  min-height: 0;
+  overflow: hidden;
 }
 
-#subtitulo {
-    font-size: 12px;
-    color: #888;
-    display: block;
+#map-columna {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-#titulo-dinamico {
-    position: absolute;
-    top: 120px;       /* debajo del encabezado */
-    left: 16px;
-    z-index: 1000;
-    background: rgba(255,255,255,0.95);
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-family: sans-serif;
-    font-size: 20px;
-    max-width: 500px;
+#map-frame {
+  position: relative;
+  flex: 1;
 }
 
-.waffle {
-    display: grid;
-    grid-template-columns: repeat(10, 12px);
-    gap: 2px;
-    width: max-content;
-}
-.casilla { width: 12px; height: 12px; }
-.casilla.pintada { background: #b5391f; }
-.casilla.vacia   { background: #d6d6d2; }
+#map { width: 100%; height: 100%; }
 
-#mensaje-anio {
-    position: absolute;
-    bottom: 200px;
-    left: 20px;
-    z-index: 1000;
-    background: #ffffff;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-weight: bold;
-    color: #c0392b;
-    max-width: 300px;
+#panel {
+  overflow-y: auto;
 }
+
+#barra-año { flex-shrink: 0; }w
