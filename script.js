@@ -19,6 +19,13 @@ function getColor(value) {
     return '#f7fbff';
 }
 
+function getEraInfo(anio) {
+    if (anio <= 2001) return { label: "'94–'01", cssVar: '--era-94-01' };
+    if (anio <= 2009) return { label: "'02–'09", cssVar: '--era-02-09' };
+    if (anio <= 2017) return { label: "'10–'17", cssVar: '--era-10-17' };
+    return { label: "'18–'25", cssVar: '--era-18-25' };
+}
+
 function estiloWijk(feature) {
     const mdzone = feature.properties.mdzone;
     const data = bisaData[anioActivo][mdzone];
@@ -105,6 +112,14 @@ const i18n = {
         menosDe1Inwoner: 'minder dan 1 inwoner',
         sinDataAnioAntes: 'Geen data voor',
         sinDataAnioDespues: 'vóór',
+        gemeenteLabel: 'Gemeente',
+        wijkLabel: 'Wijk',
+        aandeelLabel: 'Aandeel',
+        waffleVanElke: 'Van elke',
+        waffleKomenEr: 'komen er',
+        waffleUit: 'uit',
+        jaarLabel: 'Jaar',
+        bronLabel: 'Bron BISA',
         categorias: {
             noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
             sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
@@ -135,6 +150,14 @@ const i18n = {
         menosDe1Inwoner: "moins d'un habitant",
         sinDataAnioAntes: "Pas de données pour",
         sinDataAnioDespues: 'avant',
+        gemeenteLabel: 'Commune',
+        wijkLabel: 'Quartier',
+        aandeelLabel: 'Part',
+        waffleVanElke: 'Sur',
+        waffleKomenEr: 'il y en a',
+        waffleUit: 'de',
+        jaarLabel: 'Année',
+        bronLabel: 'Source IBSA',
         categorias: {
             noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
             sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
@@ -208,6 +231,7 @@ function actualizarPanel(layer) {
 
     const panel     = document.getElementById('panel');
     const campoWijk = idiomaActivo === 'fr' ? 'namefre' : 'namedut';
+    const t         = i18n[idiomaActivo];
 
     if (!data) {
         panel.innerHTML = '<p>Geen data beschikbaar</p>';
@@ -216,26 +240,49 @@ function actualizarPanel(layer) {
 
     if (data[categoriaActiva] == null || data.totale_bevolking == null) {
         panel.innerHTML = `
-            <p class="panel-gemeente">${gemeenteActiva}</p>
+            <p class="panel-label">${t.gemeenteLabel}</p>
+            <p class="panel-gemeente-stamp">${gemeenteActiva}</p>
+            <p class="panel-label">${t.wijkLabel}</p>
             <p class="panel-wijk">${props[campoWijk]}</p>
-            <p class="panel-nodata">${i18n[idiomaActivo].sinData}</p>
+            <p class="panel-nodata">${t.sinData}</p>
         `;
         return;
     }
 
-    const valor          = data[categoriaActiva];
-    const nombreCategoria = i18n[idiomaActivo].categorias[categoriaActiva].boton;
-    const total          = data.totale_bevolking;
-    const redondeado = Math.round(valor);
-    const personas   = Math.round(valor / 100 * total);
+    const valor           = data[categoriaActiva];
+    const nombreCategoria = t.categorias[categoriaActiva].boton;
+    const total           = data.totale_bevolking;
+    const redondeado      = Math.round(valor);
+    const personas        = Math.round(valor / 100 * total);
+    const era             = getEraInfo(anioActivo);
 
     panel.innerHTML = `
-        <p class="panel-gemeente">${gemeenteActiva}</p>
+        <p class="panel-label">${t.gemeenteLabel}</p>
+        <p class="panel-gemeente-stamp">${gemeenteActiva}</p>
+
+        <p class="panel-label">${t.wijkLabel}</p>
         <p class="panel-wijk">${props[campoWijk]}</p>
-        <p class="panel-cat"><strong>${valor.toLocaleString(i18n[idiomaActivo].locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</strong> ${nombreCategoria}</p>
-        ${construirWaffle(redondeado)}
-        <p class="panel-personas">± <strong>${personas}</strong> ${i18n[idiomaActivo].vanDe} ${total.toLocaleString(i18n[idiomaActivo].locale)} ${i18n[idiomaActivo].inwoners}</p>
-        <p class="panel-nota">${i18n[idiomaActivo].geschat}</p>
+
+        <div class="panel-cifra-wrap">
+            <span class="panel-cifra">${redondeado}</span><span class="panel-cifra-unit">%</span>
+            <div class="panel-cifra-caption">
+                <span class="panel-label">${t.aandeelLabel}</span>
+                <span class="panel-cifra-cat">${nombreCategoria}</span>
+            </div>
+        </div>
+
+        <div class="waffle-wrap">
+            ${construirWaffle(redondeado)}
+            <p class="waffle-texto">${t.waffleVanElke} <strong>100</strong> ${t.inwoners} ${t.waffleKomenEr} <strong>${redondeado}</strong> ${t.waffleUit} ${nombreCategoria}.</p>
+        </div>
+
+        <p class="panel-personas">± <strong>${personas.toLocaleString(t.locale)}</strong> ${t.vanDe} <strong>${total.toLocaleString(t.locale)}</strong> ${t.inwoners}.</p>
+        <p class="panel-nota">${t.geschat}</p>
+
+        <div class="panel-footer">
+            <span class="footer-chip" style="background: var(${era.cssVar})">${era.label}</span>
+            <span class="footer-meta">${t.jaarLabel} ${anioActivo} · ${t.bronLabel}</span>
+        </div>
     `;
 }
 
@@ -324,11 +371,13 @@ fetch('data/quartiers.geojson')
             onEachFeature: onEachFeature,
         }).addTo(map);
 
-map.invalidateSize();
-map.fitBounds(geojsonLayer.getBounds(), {
-    padding: [20, 20],
-    maxZoom: 13,
-});
+setTimeout(() => {
+    map.invalidateSize();
+    map.fitBounds(geojsonLayer.getBounds(), {
+        padding: [20, 20],
+        maxZoom: 13,
+    });
+}, 300);
 
 // Recalcular una vez más cuando la fuente termine de cargar
 document.fonts.ready.then(() => {
