@@ -69,6 +69,8 @@ input[type="range"] { font: inherit; }
   grid-template-columns: 1.4fr 1fr;
   min-height: 0;
   overflow: hidden;
+  padding: 20px 40px 20px;    /* nuevo — mismo 40px que hero y selector */
+  gap: 32px;                /* nuevo — separación entre mapa y panel */
 }
 
 #map-columna {
@@ -227,9 +229,9 @@ input[type="range"] { font: inherit; }
 #map-frame {
   border: 1.5px solid var(--inkt);
   background-color: var(--water);
-  background-image: radial-gradient(var(--inkt) 1px, transparent 1px);
-  background-size: 14px 14px;
-  background-position: 7px 7px;
+  background-image: radial-gradient(#7FB8D4 1px, transparent 1px);  /* antes var(--inkt) */
+  background-size: 16px 16px;      /* antes 14px — un poco más espaciado */
+  background-position: 8px 8px;
   opacity: 1;
 }
 
@@ -258,11 +260,11 @@ input[type="range"] { font: inherit; }
 /* --- leyenda --- */
 #legenda {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 30px;
+  left: 30px;      /* antes 20px */
   z-index: 500;
   background: var(--papier);
-  border: 2px solid var(--inkt);      /* antes 1.5px */
+  border: 2px solid var(--inkt);
   padding: 14px 18px;
   width: 300px;
   box-sizing: border-box;

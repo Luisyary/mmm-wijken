@@ -25,8 +25,8 @@ function estiloWijk(feature) {
     const valor  = data ? data[categoriaActiva] : null;
     return {
         fillColor:   getColor(valor),
-        fillOpacity: 0.75,
-        color:       '#ffffff',
+        fillOpacity: 1,          // antes 0.75 — colores sólidos, sin transparencia
+        color:       '#1F2440',  // antes '#ffffff' — borde en tinta oscura
         weight:      1,
     };
 }
@@ -35,16 +35,17 @@ function estiloGemeente(feature) {
     return {
         fillColor:   'transparent',
         fillOpacity: 0,
-        color:       '#f5a623',
-        weight:      3,
+        color:       '#E6007E',   // magenta fijo por ahora — luego lo conectamos al acento de era
+        weight:      3.5,
+        dashArray:   '6, 5',
     };
 }
 
 function estiloWijkSeleccionado() {
     return {
-        fillOpacity: 0.9,
-        color:       '#088b0f',
-        weight:      3,
+        fillOpacity: 1,
+        color:       '#E6007E',   // magenta — luego se conecta al acento de era
+        weight:      4,
     };
 }
 
@@ -241,22 +242,6 @@ function actualizarPanel(layer) {
 // ── 4. EVENTOS POR WIJK ──────────────────────────────────────────
 function onEachFeature(feature, layer) {
 
-    layer.on('mouseover', function () {
-        if (layer !== wijkSeleccionado) {
-            layer.setStyle({ fillOpacity: 1, weight: 2 });
-        }
-        layer.bringToFront();
-         if (gemeenteLayer) {
-        gemeenteLayer.bringToFront();
-    }
-    });
-
-    layer.on('mouseout', function () {
-        if (layer !== wijkSeleccionado) {
-            geojsonLayer.resetStyle(layer);
-        }
-    });
-
     layer.on('click', function () {
 
         // Resetear selección anterior
@@ -295,6 +280,7 @@ if (communeEncontrada) {
         style: estiloGemeente,
         interactive: false
     }).addTo(map);
+    gemeenteLayer.bringToFront();
     const campoGemeente = idiomaActivo === 'fr' ? 'name_fr' : 'name_nl';
     gemeenteActiva = communeEncontrada.properties[campoGemeente];
 }
@@ -338,8 +324,17 @@ fetch('data/quartiers.geojson')
             onEachFeature: onEachFeature,
         }).addTo(map);
 
-           map.fitBounds(geojsonLayer.getBounds(), {
-    });
+map.invalidateSize();
+map.fitBounds(geojsonLayer.getBounds(), {
+    padding: [20, 20],
+    maxZoom: 13,
+});
+
+// Recalcular una vez más cuando la fuente termine de cargar
+document.fonts.ready.then(() => {
+    map.invalidateSize();
+});
+
         console.log('✅ GeoJSON + BISA conectados');
     })
     .catch(error => {
