@@ -88,4 +88,49 @@ input[type="range"] { font: inherit; }
   overflow-y: auto;
 }
 
-#barra-año { flex-shrink: 0; }w
+#barra-año { flex-shrink: 0; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+#encabezado {
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--inkt);
+}
+
+#museo-naam {
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--inkt);
+}
+
+#subtitulo {
+  font-family: var(--font-narrow);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--inkt);
+  opacity: 0.65;
+}
+
+#toggle-idioma {
+  display: flex;
+  border: 1.5px solid var(--inkt);
+}
+
+.btn-idioma {
+  font-family: var(--font-narrow);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 6px 16px;
+  color: var(--inkt);
+}
+
+.btn-idioma.activo {
+  background: var(--inkt);
+  color: var(--papier);
+}
