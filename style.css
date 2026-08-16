@@ -301,7 +301,7 @@ input[type="range"] { font: inherit; }
   opacity: 0.55;
   margin-top: 10px;
   letter-spacing: 0.03em;
-  white-space: nowrap;
+  line-height: 1.4;
 }
 
 /* ============================================
