@@ -420,6 +420,8 @@ input[type="range"] { font: inherit; }
   font-size: 17px;
   line-height: 1.4;
   color: var(--inkt);
+  text-wrap: pretty;
+  max-width: 30ch;
 }
 .waffle-texto strong { color: var(--acento-actief); }
 
@@ -462,8 +464,9 @@ input[type="range"] { font: inherit; }
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 45px;
-  padding-top: 0;
+  margin-top: 0;
+  padding-top: 32px;
+  padding-bottom: 22px;
 }
 
 .footer-chip {
