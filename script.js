@@ -167,6 +167,28 @@ const i18n = {
             latijns_amerika: { boton: 'Latijns-Amerika', frase: 'een nationaliteit uit {x}', acento: 'Latijns-Amerika' },
             andere_landen:   { boton: 'Andere landen',   frase: 'een nationaliteit uit {x}', acento: 'een ander land' },
         },
+
+        info: {
+            titel1: 'Over deze kaart',
+            tekst1: 'Deze kaart toont hoeveel inwoners van elke Brusselse wijk een niet-Belgische nationaliteit hebben. Kies een nationaliteitsgroep, verplaats het jaar en tik op een wijk.',
+            titel2: 'Wat betekent "nationaliteit"?',
+            tekst2: 'Het gaat om de nationaliteit die iemand vandaag heeft, niet om waar iemand geboren is. Wie ook de Belgische nationaliteit heeft, telt hier als Belg en verschijnt dus niet in deze cijfers.',
+            titel3: 'De negen groepen',
+            grupos: [
+                ['Noord-Afrika',    'Algerije, Libië, Tunesië, Marokko, Egypte'],
+                ['Sub-Sahara',      'Alle Afrikaanse landen behalve Noord-Afrika'],
+                ['Turkije',         'Turkije'],
+                ['Frankrijk',       'Frankrijk'],
+                ['Europa 14',       'De 14 EU-landen vóór de uitbreiding van 2004, zonder België'],
+                ['OESO',            'Australië, Canada, Zuid-Korea, VS, Japan, Nieuw-Zeeland'],
+                ['Nieuwe EU',       'De 13 landen die toetraden in 2004, 2007 en 2013'],
+                ['Latijns-Amerika', 'Alle landen van Amerika behalve de VS en Canada'],
+                ['Andere landen',   'Alle overige nationaliteiten, ook staatlozen'],
+            ],
+            titel4: 'Bron',
+            bron: 'BISA · wijkmonitoring.brussels',
+            credits: 'Concept, ontwerp, redactie & ontwikkeling: Luis Yary',
+        },
     },
 
     fr: {
@@ -214,6 +236,29 @@ const i18n = {
             latijns_amerika: { boton: 'Amérique latine',  frase: 'une nationalité {x}', acento: "d'Amérique latine" },
             andere_landen:   { boton: 'Autres pays',      frase: 'une nationalité {x}', acento: "d'un autre pays" },
         },
+
+        info: {
+            titel1: 'À propos de cette carte',
+            tekst1: 'Cette carte montre combien d\'habitants de chaque quartier bruxellois ont une nationalité non belge. Choisissez un groupe de nationalités, déplacez l\'année et touchez un quartier.',
+            titel2: 'Que signifie « nationalité » ?',
+            tekst2: 'Il s\'agit de la nationalité qu\'une personne possède aujourd\'hui, et non de son lieu de naissance. Les personnes ayant aussi la nationalité belge comptent ici comme Belges et n\'apparaissent donc pas dans ces chiffres.',
+            titel3: 'Les neuf groupes',
+            grupos: [
+                ['Afrique du Nord',  'Algérie, Libye, Tunisie, Maroc, Égypte'],
+                ['Afrique subsah.',  'Tous les pays africains sauf l\'Afrique du Nord'],
+                ['Turquie',          'Turquie'],
+                ['France',           'France'],
+                ['Europe 14',        'Les 14 pays de l\'UE avant l\'élargissement de 2004, sans la Belgique'],
+                ['OCDE',             'Australie, Canada, Corée du Sud, États-Unis, Japon, Nouvelle-Zélande'],
+                ['Nouveaux UE',      'Les 13 pays entrés en 2004, 2007 et 2013'],
+                ['Amérique latine',  'Tous les pays d\'Amérique sauf les États-Unis et le Canada'],
+                ['Autres pays',      'Toutes les autres nationalités, y compris les apatrides'],
+            ],
+            titel4: 'Source',
+            bron: 'IBSA · monitoringdesquartiers.brussels',
+            credits: 'Concept, design, rédaction & développement : Luis Yary',
+        },
+
     },
 }
 
@@ -256,6 +301,8 @@ function aplicarIdioma() {
     }
     gemeenteActiva = null;
     document.getElementById('panel').innerHTML = `<p id="panel-naam">${t.klikWijk}</p>`;
+
+    if (!document.getElementById('info-paneel').hidden) construirInfo();
 }
 
 function construirWaffle(celdas) {
@@ -525,6 +572,48 @@ function actualizarTooltipSlider() {
     tooltip.textContent = anioActivo;
     tooltip.style.left = `${pct * 100}%`;
 }
+
+
+function construirInfo() {
+    const t = i18n[idiomaActivo].info;
+    const filas = t.grupos.map(([naam, uitleg]) =>
+        `<div class="info-groep"><span class="info-groep-naam">${naam}</span><span class="info-groep-tekst">${uitleg}</span></div>`
+    ).join('');
+
+    document.getElementById('info-inhoud').innerHTML = `
+        <h2 class="info-titel">${t.titel1}</h2>
+        <p class="info-tekst">${t.tekst1}</p>
+        <h2 class="info-titel">${t.titel2}</h2>
+        <p class="info-tekst">${t.tekst2}</p>
+        <h2 class="info-titel">${t.titel3}</h2>
+        <div class="info-groepen">${filas}</div>
+        <h2 class="info-titel">${t.titel4}</h2>
+        <p class="info-bron">${t.bron}</p>
+        <p class="info-bron">${t.credits}</p>
+    `;
+}
+
+function abrirInfo() {
+    construirInfo();
+    document.getElementById('info-paneel').hidden = false;
+}
+
+function cerrarInfo() {
+    document.getElementById('info-paneel').hidden = true;
+}
+
+document.getElementById('btn-info').addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrirInfo();
+});
+
+document.getElementById('info-sluiten').addEventListener('click', cerrarInfo);
+
+document.addEventListener('click', (e) => {
+    const paneel = document.getElementById('info-paneel');
+    if (!paneel.hidden && !paneel.contains(e.target)) cerrarInfo();
+});
+
 
 actualizarAcentoEra();   // nuevo — inicializa el acento correcto al cargar la página
 actualizarTitulo();

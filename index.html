@@ -16,11 +16,19 @@
     <header id="encabezado">
         <span id="museo-naam">MigratieMuseumMigration</span>
         <span id="subtitulo">Wijkmonitor · Brussels Hoofdstedelijk Gewest</span>
-        <div id="toggle-idioma">
-            <button class="btn-idioma activo" data-idioma="nl">NL</button>
-            <button class="btn-idioma" data-idioma="fr">FR</button>
+        <div id="header-acties">
+            <button id="btn-info" aria-label="Info">ⓘ</button>
+            <div id="toggle-idioma">
+                <button class="btn-idioma activo" data-idioma="nl">NL</button>
+                <button class="btn-idioma" data-idioma="fr">FR</button>
+            </div>
         </div>
     </header>
+
+    <div id="info-paneel" hidden>
+        <button id="info-sluiten" aria-label="Sluiten">&times;</button>
+        <div id="info-inhoud"></div>
+    </div>
 
     <div id="hero">
         <p id="eyebrow">Aandeel van de bevolking · naar nationaliteit</p>

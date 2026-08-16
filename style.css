@@ -651,3 +651,104 @@ input[type="range"] { font: inherit; }
 #legenda.geen-data #legenda-nota {
   display: none;
 }
+
+#btn-info {
+  font-family: var(--font-base);
+  font-size: 26px;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: var(--inkt);
+  cursor: pointer;
+  padding: 0 12px 0 0;
+  opacity: 1;
+}
+
+#btn-info:hover { opacity: 1; }
+
+#info-paneel {
+  position: absolute;
+  top: 58px;
+  right: 40px;
+  width: 460px;
+  max-height: 78vh;
+  overflow-y: auto;
+  z-index: 1000;
+  background: var(--papier);
+  border: 2px solid var(--inkt);
+  padding: 34px 38px 38px;
+  box-sizing: border-box;
+}
+
+#info-sluiten {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: var(--font-base);
+  font-size: 22px;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: var(--inkt);
+  cursor: pointer;
+  padding: 0;
+}
+
+.info-titel {
+  font-family: var(--font-base);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--magenta);
+  margin: 34px 0 12px;
+}
+.info-titel:first-child { margin-top: 0; }
+
+.info-tekst {
+  font-family: var(--font-base);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--inkt);
+  margin: 0;
+}
+
+.info-groepen {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.info-groep {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+.info-groep-naam {
+  font-family: var(--font-base);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--inkt);
+}
+.info-groep-tekst {
+  font-family: var(--font-base);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--inkt);
+  opacity: 0.75;
+}
+
+.info-bron {
+  font-family: var(--font-base);
+  font-size: 11px;
+  color: var(--inkt);
+  opacity: 0.6;
+  margin: 0 0 3px;
+}
+
+#header-acties {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
