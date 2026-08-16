@@ -399,12 +399,16 @@ if (communeEncontrada) {
 
 function actualizarMensajeAnio() {
     const mensaje    = document.getElementById('mensaje-anio');
+    const legenda    = document.getElementById('legenda');
     const primerAnio = rangosCategoria[categoriaActiva][0];
+    const t          = i18n[idiomaActivo];
 
     if (anioActivo < primerAnio) {
-        mensaje.textContent = `${i18n[idiomaActivo].sinDataAnioAntes} ${i18n[idiomaActivo].categorias[categoriaActiva].boton} ${i18n[idiomaActivo].sinDataAnioDespues} ${primerAnio}`;
+        mensaje.textContent = `${t.sinDataAnioAntes} ${t.categorias[categoriaActiva].boton} ${t.sinDataAnioDespues} ${primerAnio}`;
+        legenda.classList.add('geen-data');
     } else {
         mensaje.textContent = '';
+        legenda.classList.remove('geen-data');
     }
 }
 

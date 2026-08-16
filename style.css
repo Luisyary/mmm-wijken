@@ -243,8 +243,8 @@ input[type="range"] { font: inherit; }
 /* --- leyenda --- */
 #legenda {
   position: absolute;
-  bottom: 30px;
-  left: 30px;
+  bottom: 40px;
+  left: 40px;
   z-index: 500;
   background: var(--papier);
   border: 2px solid var(--inkt);
@@ -628,4 +628,23 @@ input[type="range"] { font: inherit; }
     color: color-mix(in srgb, var(--inkt) 58%, transparent);
     margin: 14px 0 0 0;
     max-width: 620px;
+}
+
+#mensaje-anio {
+  font-family: var(--font-base);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--inkt);
+  opacity: 0.55;
+  margin-top: 10px;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+/* estado sin datos: se oculta la escala */
+#legenda.geen-data #legenda-schaal,
+#legenda.geen-data #legenda-labels,
+#legenda.geen-data #legenda-nota {
+  display: none;
 }
