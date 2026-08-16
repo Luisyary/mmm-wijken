@@ -17,7 +17,7 @@
   --era-94-01: #0F8F85;
   --era-02-09: #6A4FC0;
   --era-10-17: #e98300;
-  --era-18-25: #7D1149;
+  --era-18-25: #C81E3A;
 
   /* acento activo — el JS lo reasigna según anioActivo (bloque 9) */
   --acento-actief: var(--era-10-17);
@@ -577,7 +577,7 @@ input[type="range"] { font: inherit; }
 
 #slider-tooltip {
   position: absolute;
-  top: -6px;
+  top: -7.2px;
   transform: translateX(-50%);
   background: var(--inkt);
   color: var(--papier);
@@ -588,6 +588,17 @@ input[type="range"] { font: inherit; }
   pointer-events: none;
   white-space: nowrap;
   z-index: 10;
+}
+
+#slider-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--inkt);
 }
 
 #slider-ticks {
@@ -608,4 +619,13 @@ input[type="range"] { font: inherit; }
   flex-shrink: 0;
   min-width: 46px;
   text-align: right;
+}
+
+#nota-fija {
+    font-family: var(--font-base);
+    font-size: 13px;
+    font-style: italic;
+    color: color-mix(in srgb, var(--inkt) 58%, transparent);
+    margin: 14px 0 0 0;
+    max-width: 620px;
 }

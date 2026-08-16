@@ -9,14 +9,26 @@ const map = L.map('map', {
 
 
 // ── 2. COLOREAR SEGÚN DATOS BISA ─────────────────────────────────
+
+const eraPalettes = {
+    '94-01': ['#F2FBFA', '#CDEEEB', '#8ED9D2', '#4FC0B5', '#22A79A', '#0F8F85'],
+    '02-09': ['#F1EEFB', '#D8CFF5', '#B3A0EA', '#8E71DE', '#7A5AD5', '#6A4FC0'],
+    '10-17': ['#FDF3E8', '#FAE1C2', '#F5C482', '#F0A745', '#EC9520', '#e98300'],
+    '18-25': ['#FCEAEC', '#F5C2C8', '#EA929A', '#DD6067', '#D13540', '#C81E3A'],
+};
+
 function getColor(value) {
-    if (value === null || value === undefined) return '#cccccc';
-    if (value > 20) return '#08306b';
-    if (value > 15) return '#2171b5';
-    if (value > 10) return '#4292c6';
-    if (value > 5)  return '#9ecae1';
-    if (value > 2)  return '#deebf7';
-    return '#f7fbff';
+    const era = getEraInfo(anioActivo);
+    const key = era.cssVar.replace('--era-', '');
+    const scale = eraPalettes[key];
+
+    if (value === null || value === undefined) return '#cfd2d6';
+    if (value > 20) return scale[5];
+    if (value > 15) return scale[4];
+    if (value > 10) return scale[3];
+    if (value > 5)  return scale[2];
+    if (value > 2)  return scale[1];
+    return scale[0];
 }
 
 function getEraInfo(anio) {
@@ -40,19 +52,19 @@ function estiloWijk(feature) {
 
 function estiloGemeente(feature) {
     return {
-        fillColor:   'transparent',
+        fillColor: 'transparent',
         fillOpacity: 0,
-        color:       '#E6007E',   // magenta fijo por ahora — luego lo conectamos al acento de era
-        weight:      3.5,
-        dashArray:   '6, 5',
+        color: '#1F2440',   // papier (blanco) fijo — funciona sobre cualquier color de fondo oscuro o claro
+        weight: 2.2,
+        dashArray: '6, 5',
     };
 }
 
 function estiloWijkSeleccionado() {
     return {
         fillOpacity: 1,
-        color:       '#E6007E',   // magenta — luego se conecta al acento de era
-        weight:      4,
+        color: '#1F2440',   // --inkt fijo, no el acento de era
+        weight: 2.5,
     };
 }
 
@@ -75,6 +87,14 @@ function traducirPorcentaje(valor) {
     return i18n[idiomaActivo].menosMil;
 }
 
+function getAcentoHex() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--acento-actief').trim();
+}
+
+function actualizarAcentoEra() {
+    const era = getEraInfo(anioActivo);
+    document.documentElement.style.setProperty('--acento-actief', `var(${era.cssVar})`);
+}
 
 // ── 3. ESTADO ────────────────────────────────────────────────────
 let geojsonLayer;
@@ -86,26 +106,39 @@ let communesData = null;
 let gemeenteLayer = null;
 
 function actualizarTitulo() {
-    const t = i18n[idiomaActivo];
-    const adjetivo = t.categorias[categoriaActiva].gentilicio;
+    const t      = i18n[idiomaActivo];
+    const c      = t.categorias[categoriaActiva];
+    const frase  = c.frase.replace('{x}', `<span id="herkomst-woord">${c.acento}</span>`);
     const titulo = document.getElementById('titulo-dinamico');
-    titulo.innerHTML = `${t.tituloAntes} <span id="herkomst-woord">${adjetivo}</span> ${t.tituloDespues}`;
+    titulo.innerHTML = `${t.tituloAntes} ${frase}${t.tituloDespues}`;
+}
+
+function actualizarLeyenda() {
+    const t = i18n[idiomaActivo];
+    document.getElementById('legenda-categorie-naam').textContent = t.categorias[categoriaActiva].boton;
+    document.getElementById('legenda-nota').textContent           = t.legendaNota;
 }
 
 let idiomaActivo = 'nl';
 
 const i18n = {
     nl: {
-        opDe:        '1 op de',      // → "1 op de 16"
-        opDe1000:    'op de 1000',   // → "3 op de 1000"
+        opDe:        '1 op de',
+        opDe1000:    'op de 1000',
         menosMil:    'minder dan 1 op de 1000',
-        tituloAntes: 'Waar wonen Brusselaars van',
-        tituloDespues: 'herkomst?',
+
+        // — Hero
+        eyebrow:       'Aandeel van de bevolking · naar nationaliteit',
+        tituloAntes:   'Waar wonen Brusselaars met',
+        tituloDespues: '?',
+        notaFija:      'Wie ook de Belgische nationaliteit heeft, telt hier niet mee.',
+        kiesLabel:     'Kies nationaliteit',
+
         subtitulo: 'Wijkmonitor · Brussels Hoofdstedelijk Gewest',
         klikWijk: 'Klik op een wijk',
         locale: 'nl-BE',
         vanDe: 'van de',
-        inwoners: 'inwoners',          // puede que ya lo tengas
+        inwoners: 'inwoners',
         menosDe1: 'te klein om in vakjes te tonen',
         geschat: 'geschat — afgeleid van het afgeronde percentage',
         sinData: 'Geen data beschikbaar',
@@ -115,30 +148,39 @@ const i18n = {
         gemeenteLabel: 'Gemeente',
         wijkLabel: 'Wijk',
         aandeelLabel: 'Aandeel',
-        waffleVanElke: 'Van elke',
-        waffleKomenEr: 'komen er',
-        waffleUit: 'uit',
+
+        // — Waffle (plantilla con marcadores)
+        waffleTekst:   'Van elke {totaal} inwoners hebben er {n} {frase}.',
+
         jaarLabel: 'Jaar',
         bronLabel: 'Bron BISA',
-        categorias: {
-            noord_afrika:    { boton: 'Noord-Afrika',   adjetivo: 'Noord-Afrikaanse', gentilicio: 'Noord-Afrikaanse' },
-            sub_sahara:      { boton: 'Sub-Sahara',     adjetivo: 'Sub-Saharaanse', gentilicio: 'Sub-Saharaanse' },
-            turken:          { boton: 'Turken',         adjetivo: 'Turkse', gentilicio: 'Turkse'},
-            fransen:         { boton: 'Fransen',        adjetivo: 'Franse', gentilicio: 'Franse' },
-            europa14:        { boton: 'Europa 14',      adjetivo: 'Europese (14)', gentilicio: 'Europese (14)' },
-            oeso:            { boton: 'OESO',           adjetivo: 'OESO-', gentilicio: 'OESO-' },
-            eu_nieuw:        { boton: 'Nieuwe EU',      adjetivo: 'nieuwe EU-', gentilicio: 'nieuwe EU-' },
-            latijns_amerika: { boton: 'Latijns-Amerika', adjetivo: 'Latijns-Amerikaanse', gentilicio: 'Latijns-Amerikaanse' },
-            andere_landen:   { boton: 'Andere landen',  adjetivo: 'andere', gentilicio: 'andere'},
+        legendaNota: 'Grijs = park · bos · domein · geen data',
+
+       categorias: {
+            noord_afrika:    { boton: 'Noord-Afrika',    frase: 'een nationaliteit uit {x}', acento: 'Noord-Afrika' },
+            sub_sahara:      { boton: 'Sub-Sahara',      frase: 'een nationaliteit uit {x}', acento: 'Sub-Saharaans Afrika' },
+            turken:          { boton: 'Turkije',         frase: 'de {x} nationaliteit',      acento: 'Turkse' },
+            fransen:         { boton: 'Frankrijk',       frase: 'de {x} nationaliteit',      acento: 'Franse' },
+            europa14:        { boton: 'Europa 14',       frase: 'een nationaliteit uit {x}', acento: 'de Europa 14-landen' },
+            oeso:            { boton: 'OESO',            frase: 'een nationaliteit uit {x}', acento: 'een OESO-land' },
+            eu_nieuw:        { boton: 'Nieuwe EU',       frase: 'een nationaliteit uit {x}', acento: 'de nieuwe EU-lidstaten' },
+            latijns_amerika: { boton: 'Latijns-Amerika', frase: 'een nationaliteit uit {x}', acento: 'Latijns-Amerika' },
+            andere_landen:   { boton: 'Andere landen',   frase: 'een nationaliteit uit {x}', acento: 'een ander land' },
         },
     },
-    
+
     fr: {
         opDe:        '1 sur',
         opDe1000:    'sur 1000',
         menosMil:    'moins de 1 sur 1000',
-        tituloAntes: "Où habitent les Bruxellois d'origine",
-        tituloDespues: '?',
+
+        // — Hero
+        eyebrow:       'Part de la population · par nationalité',
+        tituloAntes:   'Où vivent les Bruxellois ayant',
+        tituloDespues: '\u202F?',
+        notaFija:      'Les personnes ayant aussi la nationalité belge ne sont pas comptées ici.',
+        kiesLabel:     'Choisir la nationalité',
+
         subtitulo: 'Moniteur des quartiers · Région de Bruxelles-Capitale',
         klikWijk: 'Cliquez sur un quartier',
         locale: 'fr-BE',
@@ -148,26 +190,29 @@ const i18n = {
         menosDe1: 'trop petit pour être affiché en cases',
         sinData: 'Aucune donnée disponible',
         menosDe1Inwoner: "moins d'un habitant",
-        sinDataAnioAntes: "Pas de données pour",
+        sinDataAnioAntes: 'Pas de données pour',
         sinDataAnioDespues: 'avant',
         gemeenteLabel: 'Commune',
         wijkLabel: 'Quartier',
         aandeelLabel: 'Part',
-        waffleVanElke: 'Sur',
-        waffleKomenEr: 'il y en a',
-        waffleUit: 'de',
+
+        // — Waffle (plantilla con marcadores)
+        waffleTekst:   'Sur {totaal} habitants, {n} ont {frase}.',
+
         jaarLabel: 'Année',
         bronLabel: 'Source IBSA',
+        legendaNota: 'Gris = parc · bois · domaine · sans données',
+
         categorias: {
-            noord_afrika:    { boton: 'Afrique du Nord', adjetivo: "Part de l'Afrique du Nord", gentilicio: 'nord-africaine' },
-            sub_sahara:      { boton: 'Afrique subsah.', adjetivo: "Part de l'Afrique subsaharienne", gentilicio: 'subsaharienne' },
-            turken:          { boton: 'Turquie', adjetivo: 'Part de la Turquie', gentilicio: 'turque' },
-            fransen:         { boton: 'Français', adjetivo: 'Part des Français', gentilicio: 'française' },
-            europa14:        { boton: 'Europe 14', adjetivo: "Part de l'Europe des 14 (hors Belgique)", gentilicio: "de l'Europe des 14" },
-            oeso:            { boton: 'OCDE', adjetivo: 'Part des pays OCDE', gentilicio: "des pays de l'OCDE" },
-            eu_nieuw:        { boton: 'Nouvelle UE', adjetivo: "Part des nouveaux états membres de l'U.E.", gentilicio: "des nouveaux États membres de l'UE" },
-            latijns_amerika: { boton: 'Amérique latine', adjetivo: "Part de l'Amérique latine", gentilicio: 'latino-américaine' },
-            andere_landen:   { boton: 'Autres pays', adjetivo: 'Part des autres pays', gentilicio: "d'autres pays" },
+            noord_afrika:    { boton: 'Afrique du Nord',  frase: 'une nationalité {x}', acento: "d'Afrique du Nord" },
+            sub_sahara:      { boton: 'Afrique subsah.',  frase: 'une nationalité {x}', acento: "d'Afrique subsaharienne" },
+            turken:          { boton: 'Turquie',          frase: 'la nationalité {x}',  acento: 'turque' },
+            fransen:         { boton: 'France',           frase: 'la nationalité {x}',  acento: 'française' },
+            europa14:        { boton: 'Europe 14',        frase: 'une nationalité {x}', acento: "d'un pays de l'Europe des 14" },
+            oeso:            { boton: 'OCDE',             frase: 'une nationalité {x}', acento: "d'un pays de l'OCDE" },
+            eu_nieuw:        { boton: 'Nouveaux UE',      frase: 'une nationalité {x}', acento: "d'un nouvel État membre de l'UE" },
+            latijns_amerika: { boton: 'Amérique latine',  frase: 'une nationalité {x}', acento: "d'Amérique latine" },
+            andere_landen:   { boton: 'Autres pays',      frase: 'une nationalité {x}', acento: "d'un autre pays" },
         },
     },
 }
@@ -178,8 +223,11 @@ function aplicarIdioma() {
     // 1. Atributo lang del documento (accesibilidad)
     document.documentElement.lang = idiomaActivo;
 
-    // 2. Subtítulo del header
-    document.getElementById('subtitulo').textContent = t.subtitulo;
+    // 2. Textos fijos del header y del hero
+    document.getElementById('subtitulo').textContent          = t.subtitulo;
+    document.getElementById('eyebrow').textContent            = t.eyebrow;
+    document.getElementById('nota-fija').textContent          = t.notaFija;
+    document.getElementById('kies-herkomst-label').textContent = t.kiesLabel;
 
     // 3. Texto de los 9 botones de categoría
     document.querySelectorAll('.btn-categoria').forEach(btn => {
@@ -194,6 +242,7 @@ function aplicarIdioma() {
 
     // 5. Título dinámico
     actualizarTitulo();
+    actualizarLeyenda();
     actualizarMensajeAnio(); 
 
     // 6. Limpiar la selección (igual que al cambiar de categoría)
@@ -256,6 +305,14 @@ function actualizarPanel(layer) {
     const personas        = Math.round(valor / 100 * total);
     const era             = getEraInfo(anioActivo);
 
+    const fraseCat    = t.categorias[categoriaActiva].frase
+                          .replace('{x}', t.categorias[categoriaActiva].acento);
+
+    const textoWaffle = t.waffleTekst
+        .replace('{totaal}', '<strong>100</strong>')
+        .replace('{n}', `<strong>${redondeado}</strong>`)
+        .replace('{frase}', fraseCat);
+
     panel.innerHTML = `
         <p class="panel-label">${t.gemeenteLabel}</p>
         <p class="panel-gemeente-stamp">${gemeenteActiva}</p>
@@ -273,7 +330,7 @@ function actualizarPanel(layer) {
 
         <div class="waffle-wrap">
             ${construirWaffle(redondeado)}
-            <p class="waffle-texto">${t.waffleVanElke} <strong>100</strong> ${t.inwoners} ${t.waffleKomenEr} <strong>${redondeado}</strong> ${t.waffleUit} ${nombreCategoria}.</p>
+            <p class="waffle-texto">${textoWaffle}</p>
         </div>
 
         <p class="panel-personas">± <strong>${personas.toLocaleString(t.locale)}</strong> ${t.vanDe} <strong>${total.toLocaleString(t.locale)}</strong> ${t.inwoners}.</p>
@@ -399,6 +456,7 @@ document.querySelectorAll('.btn-categoria').forEach(btn => {
         categoriaActiva = this.dataset.categoria;
         geojsonLayer.setStyle(estiloWijk);
         actualizarTitulo();
+        actualizarLeyenda();
         actualizarMensajeAnio();
 
         // Limpiar selección al cambiar categoría
@@ -434,15 +492,33 @@ const slider     = document.getElementById('slider-año');
 const anioLabel  = document.getElementById('año-label');
 
 slider.addEventListener('input', function () {
-    anioActivo = Number(slider.value);          // 1. guardar el año (texto → número)
-    anioLabel.textContent = anioActivo;         // 2. actualizar el número visible
-    geojsonLayer.setStyle(estiloWijk);          // 3. repintar el mapa con el año nuevo
-    if (wijkSeleccionado) {                      // 4. si hay wijk seleccionado,
-        actualizarPanel(wijkSeleccionado);      //    repintar el panel con el año nuevo
+    anioActivo = Number(slider.value);
+    actualizarAcentoEra();
+    anioLabel.textContent = anioActivo;
+    geojsonLayer.setStyle(estiloWijk);
+    if (wijkSeleccionado) {
+        wijkSeleccionado.setStyle(estiloWijkSeleccionado());
+        actualizarPanel(wijkSeleccionado);
     }
-    actualizarMensajeAnio(); 
+    if (gemeenteLayer) {
+        gemeenteLayer.setStyle(estiloGemeente());
+    }
+    actualizarMensajeAnio();
+    actualizarTooltipSlider();   // nuevo
 });
 
+function actualizarTooltipSlider() {
+    const min = Number(slider.min);
+    const max = Number(slider.max);
+    const pct = (anioActivo - min) / (max - min);
+    const tooltip = document.getElementById('slider-tooltip');
+    tooltip.textContent = anioActivo;
+    tooltip.style.left = `${pct * 100}%`;
+}
+
+actualizarAcentoEra();   // nuevo — inicializa el acento correcto al cargar la página
 actualizarTitulo();
+actualizarLeyenda();
 aplicarIdioma();
-actualizarMensajeAnio(); 
+actualizarMensajeAnio();
+actualizarTooltipSlider();

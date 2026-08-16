@@ -23,21 +23,18 @@
     </header>
 
     <div id="hero">
-        <p id="eyebrow">Aandeel van de bevolking · naar herkomst</p>
-        <!-- ⚠ el span interior es nuevo: script.js hoy probablemente
-             hace textContent sobre todo el h1. Lo dejamos así para
-             poder maquetar el subrayado magenta; lo conectamos
-             cuando toquemos el bloque de JS. -->
-        <h1 id="titulo-dinamico">Waar wonen Brusselaars van <span id="herkomst-woord">Noord-Afrikaanse</span> herkomst?</h1>
+        <p id="eyebrow">Aandeel van de bevolking · naar nationaliteit</p>
+        <h1 id="titulo-dinamico">Waar wonen Brusselaars met een nationaliteit uit <span id="herkomst-woord">Noord-Afrika</span>?</h1>
+        <p id="nota-fija">Wie ook de Belgische nationaliteit heeft, telt hier niet mee.</p>
     </div>
 
     <div id="selector-categorias">
-        <p id="kies-herkomst-label">Kies herkomst</p>
+        <p id="kies-herkomst-label">Kies nationaliteit</p>
         <div id="barra-botones">
             <button class="btn-categoria activo" data-categoria="noord_afrika">Noord-Afrika</button>
             <button class="btn-categoria" data-categoria="sub_sahara">Sub-Sahara</button>
-            <button class="btn-categoria" data-categoria="turken">Turken</button>
-            <button class="btn-categoria" data-categoria="fransen">Fransen</button>
+            <button class="btn-categoria" data-categoria="turken">Turkije</button>
+            <button class="btn-categoria" data-categoria="fransen">Frankrijk</button>
             <button class="btn-categoria" data-categoria="europa14">Europa 14</button>
             <button class="btn-categoria" data-categoria="oeso">OESO</button>
             <button class="btn-categoria" data-categoria="eu_nieuw">Nieuwe EU</button>
@@ -59,7 +56,7 @@
                 <div class="hoek hoek-br" aria-hidden="true">+</div>
 
                 <div id="legenda">
-                    <p id="legenda-titel">Aandeel <span id="legenda-categorie-naam">Noord-Afrika</span></p>
+                   <p id="legenda-titel"><span id="legenda-categorie-naam">Noord-Afrika</span></p>
                     <div id="legenda-schaal">
                         <span class="legenda-stap"></span>
                         <span class="legenda-stap"></span>
