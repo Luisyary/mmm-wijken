@@ -3,8 +3,8 @@ const map = L.map('map', {
     center: [50.846, 4.352],
     zoom: 12,
     zoomControl: false,
-    minZoom: 12,     // nuevo — no se puede alejar más que esto
-    maxZoom: 15,     // nuevo — no se puede acercar más que esto
+    maxZoom: 15,
+    zoomSnap: 0,
 });
 
 
@@ -431,12 +431,15 @@ fetch('data/quartiers.geojson')
             onEachFeature: onEachFeature,
         }).addTo(map);
 
+
 setTimeout(() => {
     map.invalidateSize();
-    map.fitBounds(geojsonLayer.getBounds(), {
-        padding: [20, 20],
-        maxZoom: 13,
-    });
+    map.setMinZoom(1);
+    map.fitBounds(geojsonLayer.getBounds(), { padding: [10, 10] });
+    const base = map.getZoom();
+    map.setMinZoom(base);
+    map.setMaxZoom(base + 2);
+    map.setMaxBounds(geojsonLayer.getBounds().pad(0.15));
 }, 300);
 
 // Recalcular una vez más cuando la fuente termine de cargar

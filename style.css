@@ -190,7 +190,7 @@ input[type="range"] { font: inherit; }
 #main {
   flex: 1;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1.75fr 1fr;
   min-height: 0;
   overflow: hidden;
   padding: 0 40px 0;
