@@ -140,7 +140,7 @@ const i18n = {
         vanDe: 'van de',
         inwoners: 'inwoners',
         menosDe1: 'te klein om in vakjes te tonen',
-        geschat: 'geschat — afgeleid van het afgeronde percentage',
+        geschat: 'geschat — afgeleid van het percentage',
         sinData: 'Geen data beschikbaar',
         menosDe1Inwoner: 'minder dan 1 inwoner',
         sinDataAnioAntes: 'Geen data voor',
@@ -186,7 +186,7 @@ const i18n = {
         locale: 'fr-BE',
         vanDe: 'sur',
         inwoners: 'habitants',
-        geschat: 'estimation — dérivée du pourcentage arrondi',
+        geschat: 'estimation — dérivée du pourcentage',
         menosDe1: 'trop petit pour être affiché en cases',
         sinData: 'Aucune donnée disponible',
         menosDe1Inwoner: "moins d'un habitant",
@@ -301,18 +301,21 @@ function actualizarPanel(layer) {
     const valor           = data[categoriaActiva];
     const nombreCategoria = t.categorias[categoriaActiva].boton;
     const total           = data.totale_bevolking;
-    const redondeado      = Math.round(valor);
+    const redondeado      = Math.round(valor);          // ← primero esta
     const personas        = Math.round(valor / 100 * total);
     const era             = getEraInfo(anioActivo);
 
-    const fraseCat    = t.categorias[categoriaActiva].frase
-                          .replace('{x}', t.categorias[categoriaActiva].acento);
+    const cifraMostrada = redondeado === 0              // ← después esta
+        ? valor.toLocaleString(t.locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+        : redondeado;
 
-    const textoWaffle = t.waffleTekst
+    const fraseCat = t.categorias[categoriaActiva].frase
+        .replace('{x}', t.categorias[categoriaActiva].acento);
+
+    const textoWaffle = redondeado === 0 ? '' : t.waffleTekst
         .replace('{totaal}', '<strong>100</strong>')
         .replace('{n}', `<strong>${redondeado}</strong>`)
         .replace('{frase}', fraseCat);
-
     panel.innerHTML = `
         <p class="panel-label">${t.gemeenteLabel}</p>
         <p class="panel-gemeente-stamp">${gemeenteActiva}</p>
@@ -321,7 +324,7 @@ function actualizarPanel(layer) {
         <p class="panel-wijk">${props[campoWijk]}</p>
 
         <div class="panel-cifra-wrap">
-            <span class="panel-cifra">${redondeado}</span><span class="panel-cifra-unit">%</span>
+            <span class="panel-cifra">${cifraMostrada}</span><span class="panel-cifra-unit">%</span>
             <div class="panel-cifra-caption">
                 <span class="panel-label">${t.aandeelLabel}</span>
                 <span class="panel-cifra-cat">${nombreCategoria}</span>
