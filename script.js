@@ -489,8 +489,13 @@ setTimeout(() => {
     map.fitBounds(geojsonLayer.getBounds(), { padding: [10, 10] });
     const base = map.getZoom();
     map.setMinZoom(base);
-    map.setMaxZoom(base + 2);
-    map.setMaxBounds(geojsonLayer.getBounds().pad(0.15));
+    map.setMaxZoom(base);
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
 }, 300);
 
 // Recalcular una vez más cuando la fuente termine de cargar
@@ -543,6 +548,23 @@ document.querySelectorAll('.btn-idioma').forEach(btn => {
         aplicarIdioma();
     });
 });
+
+// — FLECHAS DE AÑO
+const btnPrev = document.getElementById('año-prev');
+const btnNext = document.getElementById('año-next');
+
+function cambiarAnio(delta) {
+    const slider = document.getElementById('slider-año');
+    const nuevo  = Number(slider.value) + delta;
+    if (nuevo < Number(slider.min) || nuevo > Number(slider.max)) return;
+
+    slider.value = nuevo;
+    slider.dispatchEvent(new Event('input'));
+}
+
+btnPrev.addEventListener('click', () => cambiarAnio(-1));
+btnNext.addEventListener('click', () => cambiarAnio(1));
+
 
 // ── 7. SLIDER DE AÑOS ────────────────────────────────────────────
 const slider     = document.getElementById('slider-año');
